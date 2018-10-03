@@ -5,7 +5,7 @@ set :application, 'sensorygarden-api'
 set :repo_url, 'git@github.com:EPHEC-Enovatech/sensorygarden-api.git'
 set :deploy_to, '/var/www/api.sensorygarden.be'
 set :user, 'deploy'
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets bundle}
 
 namespace :deploy do 
     
