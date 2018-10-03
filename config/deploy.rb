@@ -6,7 +6,6 @@ set :repo_url, 'git@github.com:EPHEC-Enovatech/sensorygarden-api.git'
 set :deploy_to, '/var/www/api.sensorygarden.be'
 set :user, 'deploy'
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 
 namespace :deploy do 
     
@@ -20,11 +19,5 @@ namespace :deploy do
     end
 
     after :publishing, :restart
-
-    after :restart, :clear_cache do
-        on roles(:web), in: :grous, limit: 3, wait: 10 do
-
-        end
-    end
 
 end
