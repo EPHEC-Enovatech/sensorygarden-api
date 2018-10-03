@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: sensorygarden-api_production
-  username: sensorygarden-api
-  password: <%= ENV['SENSORYGARDEN-API_DATABASE_PASSWORD'] %>
+  username: dev
+  password: <%= ENV['SENSORYGARDEN_API_DATABASE_PASSWORD'] %>
