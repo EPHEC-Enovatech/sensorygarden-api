@@ -1,29 +1,8 @@
-version: 2
-jobs:
-  #  build and test jobs go here
-  deploy-job:
-    docker:
-      - image: ruby:2.5
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-      - add_ssh_keys:
-        fingerprints:
-          - "49:d7:20:37:81:b4:39:6a:9f:54:21:20:ab:8d:56:d5"
-      - run:
-          name: Deploy to Ubuntu if tests pass and branch is Master
-          command: |
-           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-             eval `ssh-agent` && ssh-add ~/.ssh/id_rsa* && bundle exec cap production deploy
-           fi
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - deploy-job:
-          filters:
-            branches:
-              only: master
+machine:
+  ruby:
+    version: 2.5.1
+deployment:
+  production:
+    branch: production
+    commands:
+      - bundle exec cap production deploy
