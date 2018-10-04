@@ -10,6 +10,9 @@ jobs:
       - run:
           name: Bundle Install
           command: bundle check || bundle install
+      - add_ssh_keys:
+        fingerprints:
+          - "49:d7:20:37:81:b4:39:6a:9f:54:21:20:ab:8d:56:d5"
       - run:
           name: Deploy to Ubuntu if tests pass and branch is Master
           command: |
