@@ -1,0 +1,9 @@
+machine: 
+  ruby:
+    version: 2.5.1
+  
+  deployment:
+    production:
+      branch: master
+      commands: 
+        - bundle exec cap production deploy
