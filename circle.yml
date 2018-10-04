@@ -1,8 +1,10 @@
-machine:
-  ruby:
-    version: 2.5.1
-deployment:
-  production:
-    branch: production
-    commands:
-      - bundle exec cap production deploy
+version: 2
+  jobs:
+    machine:
+      ruby:
+        version: 2.5.1
+    deployment:
+      production:
+        branch: production
+        commands:
+          - bundle exec cap production deploy
