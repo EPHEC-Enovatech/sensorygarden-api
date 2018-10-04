@@ -6,16 +6,12 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
       t.string :mail, null: false
     end
 
-    create_table :devices, id: false do |t|
-      t.bigint :id
+    create_table :devices do |t|
       t.bigint :user_id
       t.string :deviceName, null: false, default: "Unnamed device"
     end
 
-    execute "ALTER TABLE devices ADD PRIMARY KEY(id, user_id);"
-
     add_foreign_key :devices, :users
-
 
     create_table :sensors do |t|
       t.string :sensorName, null: false

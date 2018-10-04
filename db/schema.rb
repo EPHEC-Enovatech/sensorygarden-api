@@ -21,9 +21,8 @@ ActiveRecord::Schema.define(version: 2018_10_04_065431) do
     t.index ["sensor_id"], name: "fk_rails_fee73dbcd1"
   end
 
-  create_table "devices", primary_key: ["id", "user_id"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "id", null: false
-    t.bigint "user_id", null: false
+  create_table "devices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "deviceName", default: "Unnamed device", null: false
     t.index ["user_id"], name: "fk_rails_410b63ef65"
   end
