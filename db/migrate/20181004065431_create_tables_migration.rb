@@ -18,15 +18,15 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
       t.string :sensorUnit, null: false
     end
 
-    create_table :data do |t|
+    create_table :data_records do |t|
       t.bigint :device_id
       t.timestamp :timestamp, null: false
       t.bigint :sensor_id
       t.float :data, null: false
     end
 
-    add_foreign_key :data, :devices
-    add_foreign_key :data, :sensors
+    add_foreign_key :data_records, :devices
+    add_foreign_key :data_records, :sensors
     
   end
 end

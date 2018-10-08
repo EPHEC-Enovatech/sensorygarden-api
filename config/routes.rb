@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   
-  
+  # Sensors
+  get 'sensors' => 'sensors#index'
+  post 'sensor' => 'sensors#create'
+  delete 'sensor/:id' => 'sensors#destroy'
 
-  get 'sensors/index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # Datas
+  get 'datas' => 'datas#index'
+  post 'data' => 'data#create'
+  delete 'data/:id' => 'data#destroy'
+
 end
