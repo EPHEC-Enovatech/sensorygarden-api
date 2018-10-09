@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
   
-  # Sensors
-  get 'sensors' => 'sensors#index'
-  post 'sensor' => 'sensors#create'
-  delete 'sensor/:id' => 'sensors#destroy'
+  # Sensors managment
+  resources :sensors
 
-  # Datas
-  get 'datas' => 'datas#index'
-  post 'data' => 'data#create'
-  delete 'data/:id' => 'data#destroy'
+  # Users managment
+  resources :users
 
 end
