@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   # Users managment
   resources :users
 
+  # Devices managment
+  resources :devices
+
 end
