@@ -12,18 +12,20 @@
 
 ActiveRecord::Schema.define(version: 2018_10_04_065431) do
 
-  create_table "data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "device_id"
+  create_table "data_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "device_id"
     t.timestamp "timestamp", null: false
     t.bigint "sensor_id"
     t.float "data", null: false
-    t.index ["device_id"], name: "fk_rails_194e9e031e"
-    t.index ["sensor_id"], name: "fk_rails_fee73dbcd1"
+    t.index ["device_id"], name: "fk_rails_26f636d8c3"
+    t.index ["sensor_id"], name: "fk_rails_72d8cc27da"
   end
 
   create_table "devices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
+    t.string "device_id", null: false
+    t.bigint "user_id", null: false
     t.string "deviceName", default: "Unnamed device", null: false
+    t.index ["device_id"], name: "index_devices_on_device_id"
     t.index ["user_id"], name: "fk_rails_410b63ef65"
   end
 
@@ -38,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_065431) do
     t.string "mail", null: false
   end
 
-  add_foreign_key "data", "devices"
-  add_foreign_key "data", "sensors"
+  add_foreign_key "data_records", "devices", primary_key: "device_id"
+  add_foreign_key "data_records", "sensors"
   add_foreign_key "devices", "users"
 end
