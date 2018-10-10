@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'devices' => 'devices#index'
   get 'devices/:user_id' => 'devices#show'
   post 'devices/:user_id' => 'devices#create'
-  patch 'devices/:user_id/:id' => 'devices#update'
-  delete 'devices/:user_id/:id' => 'devices#destroy'
+  patch 'devices/:user_id/:device_id' => 'devices#update'
+  delete 'devices/:user_id/:device_id' => 'devices#destroy'
 
 end

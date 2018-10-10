@@ -70,8 +70,54 @@ RSpec.describe 'Devices management' do
             expect(response.status).to eql(422)
         end
 
-        if "retuns a status message (ERROR) if the requested user_id doesn't exists" do
+        it "retuns a status message (ERROR) if the requested user_id doesn't exists" do
             post 'device/42', :params => { id: 'ABC000222', deviceName: "Test device", timestamp: DateTime.now }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+    end
+
+    describe 'PATCH /devices/:user_id/:device_id' do
+        it 'returns a status message' do
+            patch '/devices/1/ABC000111', :params => { deviceName: "Test device 1" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it "returns a status message (Error) if the requested user_id doesn't exists" do
+            patch '/devices/42/ABC000111', :params => { deviceName: "Test device 1" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+
+        it "returns a status message (Error) if the requested device_id doesn't exists" do
+            patch '/devices/1/ABC696969', :params => { deviceName: "Test device 1" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+    end
+
+    describe 'DELETE /devices/:user_id/:device_id' do
+        it 'returns a status message' do
+            delete '/devices/1/ABC000111'
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it "returns a status message (ERROR) if the requested user_id doesn't exists" do
+            delete '/devices/42/ABC000111'
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+
+        it "returns a status message (ERROR) if the requested device_id doesn't exists" do
+            delete '/devices/1/ABC696969'
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
