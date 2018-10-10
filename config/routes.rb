@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   # Devices management
   get 'devices' => 'devices#index'
-  get 'devices/:user_id' => 'devices#show'
+  get 'devices/:user_id' => 'devices#show' # Get all the devices of the user
   post 'devices/:user_id' => 'devices#create'
   patch 'devices/:user_id/:device_id' => 'devices#update'
   delete 'devices/:user_id/:device_id' => 'devices#destroy'
