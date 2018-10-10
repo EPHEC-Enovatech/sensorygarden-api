@@ -17,6 +17,8 @@ RSpec.configure do |config|
     end
 end
 
+=begin
+
 RSpec.describe 'Devices management' do
     describe 'GET /devices' do 
         it 'returns a status message' do
@@ -124,3 +126,5 @@ RSpec.describe 'Devices management' do
         end
     end
 end
+
+=end
