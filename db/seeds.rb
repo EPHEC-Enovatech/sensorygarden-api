@@ -14,4 +14,4 @@ Sensor.create([
 
 User.create({ nom: "Doe", prenom: "John", mail: "john@doe.com"})
 
-Device.create( user_id: 1, deviceName: "Potager de John")
+Device.create( device_id: 'ABC000111', user_id: 1, deviceName: "Potager de John")

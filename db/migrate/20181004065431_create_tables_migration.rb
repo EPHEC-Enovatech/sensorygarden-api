@@ -7,10 +7,12 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
     end
 
     create_table :devices do |t|
-      t.bigint :user_id
+      t.string :device_id, null: false, unique: true
+      t.bigint :user_id, null: false
       t.string :deviceName, null: false, default: "Unnamed device"
     end
 
+    add_index :devices, :device_id
     add_foreign_key :devices, :users
 
     create_table :sensors do |t|
@@ -19,13 +21,13 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
     end
 
     create_table :data_records do |t|
-      t.bigint :device_id
+      t.string :device_id
       t.timestamp :timestamp, null: false
       t.bigint :sensor_id
       t.float :data, null: false
     end
 
-    add_foreign_key :data_records, :devices
+    add_foreign_key :data_records, :devices, column: :device_id, primary_key: :device_id
     add_foreign_key :data_records, :sensors
     
   end
