@@ -8,7 +8,7 @@ script:
 cache: bundler
 after_success:
 - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
-- "bunble exec cap production deploy"
+- "bundle exec cap production deploy"
 services:
 - mysql
 env:
