@@ -14,7 +14,7 @@ class SensorsController < ApplicationController
     if sensor.save
       render json: { status: 'SUCCESS', message: 'Saved new Sensor', data: sensor }, status: :ok
     else 
-      render json: { status: 'ERROR', message: 'Sensor not savec', data: sensor.errors }, status: :unprocessable_entity
+      render json: { status: 'ERROR', message: 'Sensor not saved', data: sensor.errors }, status: :unprocessable_entity
     end
   end
 
