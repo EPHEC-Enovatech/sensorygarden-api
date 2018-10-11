@@ -14,11 +14,10 @@ branches:
 jobs:
   include:
     - stage: "Tests"
-      name: "DB Tests and setup"
-      script: bundle exec rake db:setup
-    - 
       name: "API unit tests"
-      script: bundle exec rake spec
+      script: 
+        - bundle exec rake db:setup 
+        - bundle exec rake spec
     - stage: "Deploy"
       name: "Deploy to VPS"
       script: 
@@ -27,5 +26,5 @@ jobs:
 stages:
   - Tests
   - name: Deploy
-    if: branch = master
+    if: type != pull_request
 
