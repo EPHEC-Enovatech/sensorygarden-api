@@ -2,13 +2,7 @@ language: ruby
 rvm:
   - 2.5.1
 bundler_args: "--jobs=2"
-script:
-  - bundle exec rake db:setup
-  - bundle exec rake spec
 cache: bundler
-after_success:
-  - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
-  - "bundle exec cap production deploy"
 services:
 - mysql
 env:
@@ -17,3 +11,21 @@ env:
 branches:
     only:
       - master
+jobs:
+  include:
+    - stage: "Tests"
+      name: "DB Tests and setup"
+      script: bundle exec rake db:setup
+    - 
+      name: "API unit tests"
+      script: bundle exec rake spec
+    - stage: "Deploy"
+      name: "Deploy to VPS"
+      script: 
+        - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
+        - "bundle exec cap production deploy"     
+stages:
+  - Tests
+  - name: Deploy
+    if: branch = master
+
