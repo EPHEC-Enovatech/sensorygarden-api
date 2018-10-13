@@ -12,7 +12,7 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
       t.string :deviceName, null: false, default: "Unnamed device"
     end
 
-    add_index :devices, :device_id
+    add_index :devices, :device_id, unique: true
     add_foreign_key :devices, :users
 
     create_table :sensors do |t|

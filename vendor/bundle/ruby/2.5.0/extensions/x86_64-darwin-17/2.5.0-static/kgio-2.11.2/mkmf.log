@@ -340,7 +340,7 @@ ld: warning: text-based stub file /System/Library/Frameworks//Foundation.framewo
 ld: warning: text-based stub file /System/Library/Frameworks//CoreFoundation.framework/Versions/A/CoreFoundation.tbd and library file /System/Library/Frameworks//CoreFoundation.framework/Versions/A/CoreFoundation are out of sync. Falling back to library file for linking.
 Undefined symbols for architecture x86_64:
   "_accept4", referenced from:
-      _t in conftest-05823d.o
+      _t in conftest-3360f0.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 checked program was:
@@ -811,7 +811,7 @@ ld: warning: text-based stub file /System/Library/Frameworks//Foundation.framewo
 ld: warning: text-based stub file /System/Library/Frameworks//CoreFoundation.framework/Versions/A/CoreFoundation.tbd and library file /System/Library/Frameworks//CoreFoundation.framework/Versions/A/CoreFoundation are out of sync. Falling back to library file for linking.
 Undefined symbols for architecture x86_64:
   "_rb_thread_blocking_region", referenced from:
-      _t in conftest-db5e12.o
+      _t in conftest-f2cebf.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 checked program was:
