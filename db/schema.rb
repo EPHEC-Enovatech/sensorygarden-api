@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_065431) do
     t.string "device_id", null: false
     t.bigint "user_id", null: false
     t.string "deviceName", default: "Unnamed device", null: false
-    t.index ["device_id"], name: "index_devices_on_device_id"
+    t.index ["device_id"], name: "index_devices_on_device_id", unique: true
     t.index ["user_id"], name: "fk_rails_410b63ef65"
   end
 
