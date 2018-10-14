@@ -16,9 +16,8 @@
 
 require 'simplecov'
 require 'simplecov-console'
-
-Simplecov.formatter = Simplecov::Formatter::Console 
-Simplecov.start
+SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start
 
 
 RSpec.configure do |config|

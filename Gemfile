@@ -31,7 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'unicorn'
 
 gem 'simplecov', require: false, group: :test
-gem 'simplecov-console'
+gem 'simplecov-console', '~> 0.4.1', require: false, group: :test
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
