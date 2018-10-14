@@ -31,11 +31,7 @@ class DatasController < ApplicationController
     rescue ActiveRecord::InvalidForeignKey => exception
       render json: { status: 'ERROR', message: 'This device does not exist', data: exception.message }, status: :not_found
     else
-      if record.id
-        render json: { status: 'SUCCESS', message: 'Record saved', data: record }, status: :ok
-      else
-        render json: { status: 'ERROR', message: 'Record save failed', data: record.errors }, status: :unprocessable_entity
-      end
+      check_record_success(record)
     end
   end
 
@@ -58,6 +54,14 @@ class DatasController < ApplicationController
     else
       render json: { status: 'ERROR', message: 'This data type does not exist' }, status: :not_found
       return false
+    end
+  end
+
+  def check_record_success(record)
+    if record.id
+      render json: { status: 'SUCCESS', message: 'Record saved', data: record }, status: :ok
+    else
+      render json: { status: 'ERROR', message: 'Record save failed', data: record.errors }, status: :unprocessable_entity
     end
   end
 
