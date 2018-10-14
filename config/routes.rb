@@ -13,4 +13,12 @@ Rails.application.routes.draw do
   patch 'devices/:id' => 'devices#update'
   delete 'devices/:id' => 'devices#destroy'
 
+
+  # Data records management
+  get 'records' => 'datas#index'
+  get 'records/:device_id' => 'datas#show'
+  get 'records/:device_id/:data_type' => 'datas#show_type'
+  post 'records/:data_type' => 'datas#create'
+  delete 'records/:id' => 'datas#destroy'
+
 end

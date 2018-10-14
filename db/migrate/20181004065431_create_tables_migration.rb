@@ -21,9 +21,9 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
     end
 
     create_table :data_records do |t|
-      t.string :device_id
+      t.string :device_id, null: false
       t.timestamp :timestamp, null: false
-      t.bigint :sensor_id
+      t.bigint :sensor_id, null: false
       t.float :data, null: false
     end
 
