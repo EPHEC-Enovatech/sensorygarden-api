@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'records' => 'datas#index'
   get 'records/:device_id' => 'datas#show'
   get 'records/:device_id/:data_type' => 'datas#show_type'
-  post 'records/:data_type' => 'datas#create'
+  post 'records/:device_id/:data_type/:data' => 'datas#create'
   delete 'records/:id' => 'datas#destroy'
 
 end
