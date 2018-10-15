@@ -24,6 +24,7 @@ class DatasController < ApplicationController
   end
 
   def create 
+    logger.info "got parameters : #{params}"
     return unless sensor_id = get_sensor_id(params[:data_type])
     record = DataRecord.new( device_id: params[:device_id], timestamp: DateTime.now, sensor_id: sensor_id.id, data: params[:data] )
     begin
