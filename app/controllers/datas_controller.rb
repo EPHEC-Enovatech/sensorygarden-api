@@ -5,8 +5,8 @@ class DatasController < ApplicationController
   end
 
   def show
-    records = DataRecord.find_by(device_id: params[:device_id])
-    if records
+    records = DataRecord.where(device_id: params[:device_id])
+    if !records.blank?
       render json: { status: 'SUCCESS', message: 'Current records for requested device', data: records }, status: :ok
     else
       render json: { status: 'ERROR', message: 'No record found for requested device' }, status: :not_found
@@ -15,8 +15,8 @@ class DatasController < ApplicationController
 
   def show_type
     return unless sensor_id = get_sensor_id(params[:data_type])
-    records = DataRecord.find_by(device_id: params[:device_id], sensor_id: sensor_id)
-    if records
+    records = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id)
+    if !records.blank?
       render json: { status: 'SUCCESS', message: 'Current records for requested device with this type', data: records }, status: :ok
     else
       render json: { status: 'ERROR', message: 'No record found for requested device with this type' }, status: :not_found
