@@ -25,7 +25,7 @@ class DatasController < ApplicationController
 
   def create 
     return unless sensor_id = get_sensor_id(params[:data_type])
-    record = DataRecord.new( device_id: params[:device_id], timestamp: params[:timestamp], sensor_id: sensor_id.id, data: params[:data] )
+    record = DataRecord.new( device_id: params[:device_id], timestamp: DateTime.now, sensor_id: sensor_id.id, data: params[:data] )
     begin
       record.save
     rescue ActiveRecord::InvalidForeignKey => exception

@@ -64,14 +64,14 @@ RSpec.describe 'Data records management' do
 
     describe 'POST /records/:data_type' do
         it 'returns a status message' do
-            post '/records/temperature', :params => { device_id: "ABC000111", timestamp: DateTime.now, data: 15 }
+            post '/records/temperature', :params => { device_id: "ABC000111", data: 15 }
             json = JSON.parse response.body
             expect(json['status']).to eql('SUCCESS')
             expect(response.status).to eql(200)
         end
 
         it 'returns a status message (ERROR) if the device_id does not exist' do
-            post '/records/temperature', :params => { device_id: "ABC696969", timestamp: DateTime.now, data: 15 }
+            post '/records/temperature', :params => { device_id: "ABC696969", data: 15 }
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
@@ -85,14 +85,14 @@ RSpec.describe 'Data records management' do
         end
 
         it 'return a status message (ERROR) if missing parameter' do
-            post '/records/temperature', :params => { device_id: "ABC000111", timestamp: DateTime.now }
+            post '/records/temperature', :params => { device_id: "ABC000111" }
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(422)
         end
 
         it 'returns a status message (ERROR) if data_type does not exist' do
-            post '/records/type_inconnu', :params => { device_id: "ABC000111", timestamp: DateTime.now, data: 15 }
+            post '/records/type_inconnu', :params => { device_id: "ABC000111", data: 15 }
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
