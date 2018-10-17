@@ -6,6 +6,7 @@ set :repo_url, 'git@github.com:EPHEC-Enovatech/sensorygarden-api.git'
 set :deploy_to, '/var/www/api.sensorygarden.be'
 set :user, 'deploy'
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets bundle}
+set :linked_files, %w{config/master.key}
 set :ssh_options, keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")
 
 namespace :deploy do 
