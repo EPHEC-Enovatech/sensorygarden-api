@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+    before_action :authenticate_user, except: [:create]
+
     def index
         users = User.all
         render json: {status: "SUCCESS", message: "All users currently in DB", data: users}, status: :ok
@@ -37,7 +39,7 @@ class UsersController < ApplicationController
     private 
 
     def user_params
-        params.permit(:nom, :prenom, :mail)
+        params.permit(:nom, :prenom, :email, :password, :password_confirmation)
     end
 
 end

@@ -1,4 +1,7 @@
 class SensorsController < ApplicationController
+
+  before_action :authenticate_user
+
   def index
     sensors = Sensor.all
     render json: { status: 'SUCCESS', message: 'Current sensors available', data: sensors }, status: :ok

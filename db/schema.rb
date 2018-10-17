@@ -37,10 +37,11 @@ ActiveRecord::Schema.define(version: 2018_10_04_065431) do
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "nom", null: false
     t.string "prenom", null: false
-    t.string "mail", null: false
+    t.string "email", null: false
+    t.string "password_digest"
   end
 
-  add_foreign_key "data_records", "devices", primary_key: "device_id", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "data_records", "sensors"
-  add_foreign_key "devices", "users"
+  add_foreign_key "data_records", "devices", primary_key: "device_id", on_delete: :cascade
+  add_foreign_key "data_records", "sensors", on_delete: :cascade
+  add_foreign_key "devices", "users", on_delete: :cascade
 end

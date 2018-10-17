@@ -1,4 +1,7 @@
 class DatasController < ApplicationController
+
+  before_action :authenticate_user, except: [:create]
+
   def index
     records = DataRecord.all
     render json: { status: 'SUCCESS', message: 'All current records in DB', data: records }, status: :ok

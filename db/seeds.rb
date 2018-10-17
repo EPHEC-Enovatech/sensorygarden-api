@@ -13,7 +13,7 @@ Sensor.create([
     { sensorName: "Humidite", sensorUnit: "Pourcent" }
 ])
 
-User.create({ nom: "Doe", prenom: "John", mail: "john@doe.com"})
+User.create({ nom: "Doe", prenom: "John", email: "john@doe.com", password: '1234', password_confirmation: '1234'})
 
 Device.create( device_id: 'ABC000111', user_id: 1, deviceName: "Potager de John")
 
