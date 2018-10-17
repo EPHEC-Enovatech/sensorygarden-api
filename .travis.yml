@@ -1,37 +1,36 @@
 language: ruby
 rvm:
-  - 2.5.1
+- 2.5.1
 bundler_args: "--jobs=2"
 cache: bundler
 services:
 - mysql
 env:
-  global:
-    - secure: YXLLXX+wDcfjAYozAobx7mnppN6pYYIK1VsyTRFoJVM1fNOVf6qvsz+cO5v6WOTLQ27+ubYb2WmwvJF3+zWyHJQ9Vs3oo/YBgDxd865aCgrZVfoNZusg+DVxle7UielGybHyQkb1PVN4h2Tz0+Cb8KBS8HFlLuQn9zzzmq7+wzEHTLXQyeI9KIhTksiwTdvZtk7arTX6JteI4Xtvu/vKjHSsgGxp2QRzZSseQ8WQRfD8tw7PITr2nhR/9rEnPG4hH6H7TvvxgzoW0m3RUPGcxj5/oLrL1Hj/naz6uYnT421P2vBqUzbBq/g2hBFqcBsII0jH1b05FcFcFbYWnAy/VzvydCMFmMlpnYcqvQAgNntPGU5wGvR8ZIPEfSpWUd1QgE67QlYu+nZ92xReuVykH4FAGNb/I0SSYpoM6N1EmDWhYZs6ieSuvu+mSY0reEie+0KdjAcIS8ikqrH0z1o1birLs2wo0T20BhSN0Zr+jXbtm5H4jiEbpzyfcvw5G72d1Z+MUD2r9qWLQGatBXtmY4GPZ4GQZ5156bIYWrydHYsbH3kbrPC9k4B/XiN5qPPrDaGxc9KCAPmn1o1GqfngTKVLVmWIMoxgt4h8/etQhtJj36mdv56mtmRolhMZYaEBpl4kh+2eHkUg9XDq6MhGkZGjYEPWv3biS9EbcD87VG4=
-    - CC_TEST_REPORTER_ID=bdf27597fd44bf77aa7daaa18a826d6987229fe487ba2020e4407de51b06e9cc
+  secure: Jy6m6ya+5Duum/ovI0UZhfVuNZJAXBV0M83gOxNabwcQQd5n3Z9FXhbFdvEm7bPitGL4x5eu+sBEwd5C1TMNQU5FPe7rGUbg1uvGHaX8cx0nWwWDZMmudki1wiYitaU1RW8EoBaqmhJ4X+rs6ibToSI3PtBAn1QcaT+SUmIBj8+lqdo4pFglRVgxkFR8u2OoKqlXUur9ttTDzEpaOYlooGAM+Gws5+CCZN7L3aKM6ZXlNKThSExH0rhMIJ3T+Zi0j51wJJypnfpanuwQ1DE1CtHGEbqwj0B597jJt1cnWx4gbW8yauzgRYf2EcsyIACRbM8E4zbiJzFoNWZ24O1PRqleF9UDMiMPSKMCZepTsS2FkIiHDDppANMkh8UqZJYhXe59H8IDQ4cdLXkAVoEOK7eJEccWk9XPXkVA9Gw/WEVTpx//aicrbDhKNbxtFcgIVItsXPOqbCC3zmW5TE2hPGgD52tskD7iHCa7VkhzUEmuUKDO6fo+16FWe9B134CdtgrpOzp3eu4J3+Rx+5Ot4BjsFmgDQt2y+3jMTnFqOxN1fIkQ3pUV8SijhTOexS/o7aACvH6loAJ/vtR65RhjNDt7xVSiNRlvwUpiCSXSxDa2Es+vXlTUELXJph4+sRa2bCUz1fT1WUOzlxZRy7vSLdj8ndvpDrjkR7BEDl7217Y=
 branches:
-    only:
-      - master
+  only:
+  - master
 jobs:
   include:
-    - stage: "Tests"
-      name: "API unit tests"
-      before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
-      script: 
-        - bundle exec rake db:setup 
-        - bundle exec rake spec
-      after_script:
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-    - stage: "Deploy"
-      name: "Deploy to VPS"
-      script: 
-        - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
-        - "bundle exec cap production deploy"     
+  - stage: Tests
+    name: API unit tests
+    before_script:
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+      > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
+    - "./cc-test-reporter before-build"
+    script:
+    - bundle exec rake db:setup
+    - bundle exec rake spec
+    after_script:
+    - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - stage: Deploy
+    name: Deploy to VPS
+    script:
+    - openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a
+      -out config/deploy_id_rsa
+    - bundle exec cap production deploy
 stages:
-  - Tests
-  - name: Deploy
-    if: type != pull_request
-
+- Tests
+- name: Deploy
+  if: type != pull_request

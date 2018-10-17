@@ -3,7 +3,8 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
     create_table :users do |t|
       t.string :nom, null: false
       t.string :prenom, null: false
-      t.string :mail, null: false
+      t.string :email, null: false
+      t.string :password_digest
     end
 
     create_table :devices do |t|
@@ -13,7 +14,7 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
     end
 
     add_index :devices, :device_id, unique: true
-    add_foreign_key :devices, :users
+    add_foreign_key :devices, :users, on_delete: :cascade
 
     create_table :sensors do |t|
       t.string :sensorName, null: false
@@ -27,8 +28,8 @@ class CreateTablesMigration < ActiveRecord::Migration[5.2]
       t.float :data, null: false
     end
 
-    add_foreign_key :data_records, :devices, column: :device_id, primary_key: :device_id
-    add_foreign_key :data_records, :sensors
+    add_foreign_key :data_records, :devices, column: :device_id, primary_key: :device_id, on_delete: :cascade
+    add_foreign_key :data_records, :sensors, on_delete: :cascade
     
   end
 end

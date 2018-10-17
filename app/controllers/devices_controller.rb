@@ -1,5 +1,7 @@
 class DevicesController < ApplicationController
 
+    before_action :authenticate_user
+
     def index
         devices = Device.all
         render json: { status: "SUCCESS", message: "All devices currently in DB", data: devices }, status: :ok
