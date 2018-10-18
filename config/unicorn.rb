@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'rails'
+require 'knock'
+
 root = "/var/www/api.sensorygarden.be/current"
 working_directory root
 pid "#{root}/tmp/pids/unicorn.pid"
