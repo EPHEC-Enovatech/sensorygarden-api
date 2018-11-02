@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'records/:device_id' => 'datas#show'
   get 'records/:device_id/:data_type' => 'datas#show_type'
   get 'records/:device_id/:data_type/:date' => 'datas#show_date'
+  get 'records/:device_id/:data_type/:start_date/:end_date' => "datas#show_range"
   post 'records/:data_type' => 'datas#create'
   delete 'records/:id' => 'datas#destroy'
 
