@@ -23,11 +23,8 @@ class UsersController < ApplicationController
 
     def update
         user = User.find(params[:id])
-        if user.update_attributes(user_params)
-            render json: {status: "SUCCESS", message: "User updated", data: user}, status: :ok
-        else
-            render json: {status: "ERROR", message: "User update failed", data: user.errors}, status: :unprocessable_entity     
-        end                
+        user.update_attributes(user_params)
+        render json: {status: "SUCCESS", message: "User updated", data: user}, status: :ok              
     end
 
     def destroy

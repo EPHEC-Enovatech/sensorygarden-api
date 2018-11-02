@@ -23,11 +23,8 @@ class SensorsController < ApplicationController
 
   def update
     sensor = Sensor.find(params[:id])
-    if sensor.update_attributes(sensor_params)
-      render json: { status: 'SUCCESS', message: 'Sensor updated', data: sensor }, status: :ok
-    else
-      render json: { status: 'ERROR', message: 'Sensor update failed', data: sensor.errors }, status: :unprocessable_entity
-    end
+    sensor.update_attributes(sensor_params)
+    render json: { status: 'SUCCESS', message: 'Sensor updated', data: sensor }, status: :ok
   end
 
   def destroy
