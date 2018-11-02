@@ -37,7 +37,7 @@ class DevicesController < ApplicationController
             if device.update_attributes(device_params)
                 render json: { status: "SUCCESS", message: "Device updated", data: device }, status: :ok
             else
-                render json: { status: "SUCCESS", message: "Device update failed", data: device.errors }, status: :unprocessable_entity
+                render json: { status: "ERROR", message: "Device update failed", data: device.errors }, status: :unprocessable_entity
             end
         else
             render json: { status: "ERROR", message: "No device found for requested user" }, status: :not_found
