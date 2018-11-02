@@ -60,7 +60,7 @@ RSpec.describe 'Data records management' do
             expect(response.status).to eql(404)
         end
 
-        it 'returns a status message (ERROR) this there is no record for the device and type requested' do
+        it 'returns a status message (ERROR) if there is no record for the device and type requested' do
             get '/records/ABC000111/pression', :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
@@ -74,6 +74,34 @@ RSpec.describe 'Data records management' do
             expect(response.status).to eql(401)
             get '/records/ABC000111/temperature'
             expect(response.status).to eql(401)
+        end
+
+        it 'support getting a date to return only the records for this date' do
+            get '/records/ABC000111/temperature/17-10-2018', :headers => { Authorization: "Bearer #{@token}"}
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if there is no record for the device, type and date requested' do
+            get '/records/ABC000111/temperature/17-10-2019', :headers => { Authorization: "Bearer #{@token}"}
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+
+        it 'supports getting a date range to return the records for this range' do
+            get '/records/ABC000111/temperature/17-10-2018/19-10-2018', :headers => { Authorization: "Bearer #{@token}"}
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if there is no record for the device, type and date requested' do
+            get '/records/ABC000111/temperature/17-10-2019/19-10-2019', :headers => { Authorization: "Bearer #{@token}"}
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
         end
     end
 

@@ -34,11 +34,8 @@ class DevicesController < ApplicationController
     def update
         device = Device.find_by(device_id: params[:id])
         if device
-            if device.update_attributes(device_params)
-                render json: { status: "SUCCESS", message: "Device updated", data: device }, status: :ok
-            else
-                render json: { status: "SUCCESS", message: "Device update failed", data: device.errors }, status: :unprocessable_entity
-            end
+            device.update_attributes(device_params)
+            render json: { status: "SUCCESS", message: "Device updated", data: device }, status: :ok
         else
             render json: { status: "ERROR", message: "No device found for requested user" }, status: :not_found
         end

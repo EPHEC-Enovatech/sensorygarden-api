@@ -26,6 +26,29 @@ class DatasController < ApplicationController
     end
   end
 
+  def show_date
+    return unless sensor_id = get_sensor_id(params[:data_type])
+    date = Date.strptime(params[:date], '%d-%m-%Y')
+    records = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id, timestamp: (date.midnight)..(date.midnight+1.day))
+    if !records.blank?
+      render json: { status: 'SUCCESS', message: 'Current records for requested device with this type and for requested day', data: records }, status: :ok
+    else
+      render json: { status: 'ERROR', message: 'No record found for requested device with this type and for requested day'}, status: :not_found
+    end
+  end
+
+  def show_range
+    return unless sensor_id = get_sensor_id(params[:data_type])
+    start_date = Date.strptime(params[:start_date], '%d-%m-%Y')
+    end_date = Date.strptime(params[:end_date], '%d-%m-%Y')
+    records = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id, timestamp: (start_date.midnight)..(end_date.midnight))
+    if !records.blank?
+      render json: { status: 'SUCCESS', message: 'Current records for requested device with this type and for requested day', data: records }, status: :ok
+    else
+      render json: { status: 'ERROR', message: 'No record found for requested device with this type and for requested day'}, status: :not_found
+    end
+  end
+
   def create
     logger.info params
     return unless sensor_id = get_sensor_id(params[:data_type])
@@ -41,12 +64,8 @@ class DatasController < ApplicationController
 
   def destroy
     record = DataRecord.find(params[:id])
-    if record 
-      record.destroy
-      render json: { status: 'SUCCESS', message: 'Record removed', data: record }, status: :ok
-    else
-      render json: { status: 'ERROR', message: 'Record not found' }, status: :not_found
-    end
+    record.destroy
+    render json: { status: 'SUCCESS', message: 'Record removed', data: record }, status: :ok
   end
 
   private 
