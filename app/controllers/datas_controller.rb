@@ -41,7 +41,7 @@ class DatasController < ApplicationController
     return unless sensor_id = get_sensor_id(params[:data_type])
     start_date = Date.strptime(params[:start_date], '%d-%m-%Y')
     end_date = Date.strptime(params[:end_date], '%d-%m-%Y')
-    records = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id, timestamp: (start_date.midnight)..(end_date.midnight))
+    records = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id, timestamp: (start_date.midnight)..(end_date.midnight+1.day))
     check_record_blank(
       records,
       'Current records for requested device with this type and for requested day',
