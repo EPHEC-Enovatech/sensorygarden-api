@@ -49,6 +49,15 @@ class DatasController < ApplicationController
     )
   end
 
+  def get_last_record_date
+    timestamp = DataRecord.where(device_id: params[:device_id]).order("timestamp").select(:id, :timestamp).last
+    check_record_blank(
+      timestamp,
+      'Timestamp of the last record for requested device',
+      'No records found for requested device'
+    )
+  end
+
   def create
     logger.info params
     return unless sensor_id = get_sensor_id(params[:data_type])

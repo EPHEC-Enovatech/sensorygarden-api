@@ -103,6 +103,13 @@ RSpec.describe 'Data records management' do
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
         end
+
+        it 'supports getting a "/last" endpoint plus a device_id to return the timestamp of the last record' do
+            get '/records/last/ABC000111/', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
     end
 
     describe 'POST /records/:data_type' do
