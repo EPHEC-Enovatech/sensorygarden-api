@@ -17,15 +17,14 @@ class DevicesController < ApplicationController
     end
 
     def create
+        return unless check_checksum(params[:checksum].to_i, params[:device_id])
         device = Device.new(device_params)
         begin
             device.save
-        rescue ActiveRecord::NotNullViolation => exception
-            render json: { status: 'ERROR', message: 'Saving failed: Missing deviceName value', data: exception.message }, status: :unprocessable_entity
         rescue ActiveRecord::InvalidForeignKey => exception
             render json: { status: 'ERROR', message: 'Saving failed: user_id does not exist', data: exception.message }, status: :not_found
         rescue ActiveRecord::RecordNotUnique => exception
-           render json: { status: 'ERROR', message: 'Saving failed: device_id already exists', data: exception.message }, status: :unprocessable_entity
+        render json: { status: 'ERROR', message: 'Saving failed: device_id already exists', data: exception.message }, status: :unprocessable_entity
         else
             render json: { status: 'SUCCESS', message: "Device saved", data: device }, status: :ok
         end
@@ -55,6 +54,28 @@ class DevicesController < ApplicationController
 
     def device_params
         params.permit(:user_id, :device_id, :deviceName)
+    end
+
+    def check_checksum(checksum, param)
+        if checksum.blank? || param.blank?
+            render json: { status: 'ERROR', message: "Missing device_id and/or checksum" }, status: :unprocessable_entity
+            return false
+        else
+            if checksum === gen_checksum(param)
+                return true
+            else
+                render json: { status: 'ERROR', message: "The verification code is incorrect"}, status: :unprocessable_entity
+                return false
+            end
+        end
+    end
+
+    def gen_checksum(param)
+        result = 0
+        param.length.times do |i|
+            result += param[i].ord*i+1
+        end
+        return result%97
     end
 
 end
