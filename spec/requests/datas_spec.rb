@@ -103,6 +103,20 @@ RSpec.describe 'Data records management' do
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
         end
+
+        it 'supports getting a "/last" endpoint plus a device_id to return the timestamp of the last record' do
+            get '/records/ABC000111/temperature/last', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'return a status message (ERROR) if there is no record for the device and/or type requested' do
+            get '/records/ABC696969/type_inconnu/last', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
     end
 
     describe 'POST /records/:data_type' do
