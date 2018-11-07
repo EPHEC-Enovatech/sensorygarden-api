@@ -7,4 +7,6 @@
 [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m781197194-91bd11d1d9716b993f6ab7ea.svg)](https://stats.uptimerobot.com/3wxA3hqAA)
 [![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m781197194-91bd11d1d9716b993f6ab7ea.svg)](https://stats.uptimerobot.com/3wxA3hqAA)
 
+![GitHub last commit](https://img.shields.io/github/last-commit/EPHEC-Enovatech/sensorygarden-api.svg)
+
 RestFul API used to fetch the Database developed with Ruby on Rails 5 and MySQL
