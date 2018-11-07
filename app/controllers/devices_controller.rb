@@ -8,11 +8,11 @@ class DevicesController < ApplicationController
     end
 
     def show
-        devices = Device.find_by(user_id: params[:user_id])
-        if devices
+        devices = Device.where(user_id: params[:user_id]) 
+        if !devices.blank?
             render json: { status: "SUCCESS", message: "All devices currently assigned to requested user", data: devices }, status: :ok
         else
-            render json: { status: "ERROR", message: "No device found for requested user" }, status: :not_found
+            raise(ActiveRecord::RecordNotFound)
         end
     end
 
