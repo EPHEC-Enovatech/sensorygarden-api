@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   # Data records management
   get 'records' => 'datas#index'
   get 'records/:device_id' => 'datas#show'
-  get 'records/last/:device_id' => 'datas#get_last_record_date'
   get 'records/:device_id/:data_type' => 'datas#show_type'
+  get 'records/:device_id/:data_type/last' => 'datas#get_last_record_date'
   get 'records/:device_id/:data_type/:date' => 'datas#show_date'
   get 'records/:device_id/:data_type/:start_date/:end_date' => "datas#show_range"
   post 'records/:data_type' => 'datas#create'
