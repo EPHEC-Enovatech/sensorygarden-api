@@ -34,4 +34,5 @@ stages:
   - Tests
   - name: Deploy
     if: type != pull_request
-
+notifications:
+  slack: ephecgroupe:PkzD8yVfZJS7OOytd7InyumT
