@@ -22,9 +22,9 @@ class DevicesController < ApplicationController
         begin
             device.save
         rescue ActiveRecord::InvalidForeignKey => exception
-            render json: { status: 'ERROR', message: 'Erreur de sauvegarde: le user-id n\'existe pas', data: exception.message }, status: :not_found
+            render json: { status: 'ERROR', message: 'Erreur : le user-id n\'existe pas', data: exception.message }, status: :not_found
         rescue ActiveRecord::RecordNotUnique => exception
-        render json: { status: 'ERROR', message: 'Erreur de sauvegarde: ce capteur existe déjà', data: exception.message }, status: :unprocessable_entity
+        render json: { status: 'ERROR', message: 'Erreur : ce Sensory Captor existe déjà', data: exception.message }, status: :unprocessable_entity
         else
             render json: { status: 'SUCCESS', message: "Sauvegarde réussie !", data: device }, status: :ok
         end
@@ -58,13 +58,13 @@ class DevicesController < ApplicationController
 
     def check_checksum(checksum, param)
         if checksum.blank? || param.blank?
-            render json: { status: 'ERROR', message: "Erreur de sauvegarde: Le device_id et/ou le checksum ne peuvent être vide" }, status: :unprocessable_entity
+            render json: { status: 'ERROR', message: "Erreur : Le numéro et/ou la vérification ne peuvent être vide" }, status: :unprocessable_entity
             return false
         else
             if checksum === gen_checksum(param)
                 return true
             else
-                render json: { status: 'ERROR', message: "Erreur de sauvegarde: Le code de vérification est incorrecte"}, status: :unprocessable_entity
+                render json: { status: 'ERROR', message: "Erreur : Le code de vérification est incorrecte"}, status: :unprocessable_entity
                 return false
             end
         end
