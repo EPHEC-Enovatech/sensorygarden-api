@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     def update
         user = User.find(params[:id])
         user.update_attributes(user_params)
-        render json: {status: "SUCCESS", message: "User updated", data: user}, status: :ok              
+        render json: {status: "SUCCESS", message: "Informations mises à jour", data: user}, status: :ok              
     end
 
     def destroy
