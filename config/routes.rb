@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
+  # JWT token generation
   post 'user_token' => 'user_token#create'
+
   # Sensors management
   resources :sensors
 
@@ -24,5 +26,9 @@ Rails.application.routes.draw do
   get 'records/:device_id/:data_type/:start_date/:end_date' => "datas#show_range"
   post 'records/:data_type' => 'datas#create'
   delete 'records/:id' => 'datas#destroy'
+
+
+  # Contact
+  post 'contact' => 'contact#send_contact_demand'
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_04_065431) do
+ActiveRecord::Schema.define(version: 2018_11_10_161703) do
 
   create_table "data_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "device_id", null: false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_065431) do
     t.string "prenom", null: false
     t.string "email", null: false
     t.string "password_digest"
+    t.boolean "confirm_email", default: false
   end
 
   add_foreign_key "data_records", "devices", primary_key: "device_id", on_delete: :cascade

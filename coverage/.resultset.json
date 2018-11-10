@@ -208,7 +208,7 @@
         null,
         null,
         null,
-        305,
+        313,
         null,
         null,
         null,
@@ -255,7 +255,6 @@
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/config/routes.rb": [
         1,
         null,
-        1,
         null,
         1,
         null,
@@ -264,6 +263,9 @@
         null,
         null,
         1,
+        null,
+        null,
+        1,
         1,
         1,
         1,
@@ -278,6 +280,10 @@
         1,
         1,
         1,
+        1,
+        null,
+        null,
+        null,
         1,
         null,
         null
@@ -345,6 +351,64 @@
         null
       ],
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/controllers/user_token_controller.rb": [
+        1,
+        1,
+        null
+      ],
+      "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/controllers/contact_controller.rb": [
+        1,
+        null,
+        1,
+        2,
+        2,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        2,
+        null,
+        null,
+        null
+      ],
+      "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/controllers/application_controller.rb": [
+        1,
+        null,
+        1,
+        null,
+        1,
+        null,
+        null,
+        1,
+        8,
+        null,
+        null,
+        null
+      ],
+      "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/mailers/contact_mailer.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null
+      ],
+      "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/mailers/application_mailer.rb": [
+        1,
         1,
         1,
         null
@@ -456,20 +520,6 @@
         null,
         4,
         null,
-        null,
-        null,
-        null
-      ],
-      "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/controllers/application_controller.rb": [
-        1,
-        null,
-        1,
-        null,
-        1,
-        null,
-        null,
-        1,
-        8,
         null,
         null,
         null
@@ -647,6 +697,6 @@
         null
       ]
     },
-    "timestamp": 1541668567
+    "timestamp": 1541893074
   }
 }
