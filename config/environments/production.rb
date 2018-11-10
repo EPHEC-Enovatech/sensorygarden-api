@@ -55,6 +55,17 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "sensorygarden-api_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'mail.sensorygarden.be',
+    port: 587,
+    domain: 'sensorygarden.be',
+    authentication: 'plain',
+    enable_starttls_auto: true,
+    openssl_verify_mode: 'none',
+    user_name: ENV["SENSORYGARDEN_API_SMTP_USER"],
+    password: ENV["SENSORYGARDEN_API_SMTP_USER"]
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
