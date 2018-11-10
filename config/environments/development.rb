@@ -39,7 +39,8 @@ Rails.application.configure do
     domain: 'sensorygarden.be',
     authentication: 'plain',
     enable_starttls_auto: true,
-    user_name: "contact@sensorygarden.be"
+    openssl_verify_mode: 'none',
+    user_name: "contact@sensorygarden.be",
     password: "sensgard"
   }
 
