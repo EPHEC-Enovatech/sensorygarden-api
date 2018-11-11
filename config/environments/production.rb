@@ -63,8 +63,8 @@ Rails.application.configure do
     authentication: 'plain',
     enable_starttls_auto: true,
     openssl_verify_mode: 'none',
-    user_name: ENV["SENSORYGARDEN_API_SMTP_USER"],
-    password: ENV["SENSORYGARDEN_API_SMTP_USER"]
+    user_name: "contact@sensorygarden.be",
+    password: "sensgard"
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
