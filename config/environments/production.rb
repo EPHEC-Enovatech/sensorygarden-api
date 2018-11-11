@@ -57,7 +57,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'mail.sensorygarden.be',
+    address: 'smtp.gmail.be',
     port: 587,
     domain: 'sensorygarden.be',
     authentication: 'plain',
