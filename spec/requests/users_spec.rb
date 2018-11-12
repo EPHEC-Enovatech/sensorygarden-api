@@ -107,6 +107,20 @@ RSpec.describe 'Users management' do
             patch '/users/1'
             expect(response.status).to eql(401)
         end
+
+        it 'supports getting a /users/confirm/:email in order to confirm the user email' do
+            patch '/confirm', :params => { email: 'jane@doe.com' }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the email does not exist' do
+            patch '/confirm', :params => { email: "someone@something.net" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
     end
 
     describe 'DELETE /users/:id' do

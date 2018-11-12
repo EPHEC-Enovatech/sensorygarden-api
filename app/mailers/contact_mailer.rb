@@ -12,4 +12,10 @@ class ContactMailer < ApplicationMailer
 
     mail from: @email, to: 'contact@sensorygarden.be', subject: "Nouvelle demande de contact de #{@nom} !"
   end
+
+  def user_signup(user) 
+      @user = user
+
+      mail from: 'noreply@sensorygarden.be', to: @user[:email], subject: "Bienvenue #{@user[:prenom]} !"
+  end
 end

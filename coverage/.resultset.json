@@ -208,7 +208,7 @@
         null,
         null,
         null,
-        313,
+        321,
         null,
         null,
         null,
@@ -263,6 +263,7 @@
         null,
         null,
         1,
+        1,
         null,
         null,
         1,
@@ -306,10 +307,14 @@
         null,
         1,
         null,
+        null,
+        null,
+        null,
         1,
         null,
         null,
-        1
+        1,
+        null
       ],
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/models/sensor.rb": [
         1,
@@ -333,6 +338,13 @@
         1,
         1,
         1,
+        null,
+        1,
+        276,
+        276,
+        276,
+        276,
+        null,
         null
       ],
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/models/device.rb": [
@@ -400,6 +412,12 @@
         null,
         1,
         1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null,
         1,
         1,
         null,
@@ -671,6 +689,7 @@
         4,
         4,
         1,
+        1,
         null,
         3,
         null,
@@ -680,6 +699,16 @@
         2,
         1,
         1,
+        null,
+        null,
+        1,
+        2,
+        2,
+        1,
+        1,
+        null,
+        1,
+        null,
         null,
         null,
         1,
@@ -697,6 +726,6 @@
         null
       ]
     },
-    "timestamp": 1541893074
+    "timestamp": 1542041305
   }
 }
