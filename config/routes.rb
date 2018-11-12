@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   # Users management
   resources :users
+  patch '/confirm' => "users#confirm_email"
 
   # Devices management
   get 'devices' => 'devices#index'

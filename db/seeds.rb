@@ -13,9 +13,13 @@ Sensor.create([
     { sensorName: "Humidite", sensorUnit: "Pourcent" }
 ])
 
-User.create({ nom: "Doe", prenom: "John", email: "john@doe.com", password: '1234', password_confirmation: '1234'})
+User.create([
+    { nom: "Doe", prenom: "John", email: "john@doe.com", password: '1234', password_confirmation: '1234', confirm_email: true},
+    { nom: "Doe", prenom: "Jane", email: "jane@doe.com", password: '1234', password_confirmation: '1234', confirm_email: false}
+])
 
 Device.create( device_id: 'ABC000111', user_id: 1, deviceName: "Potager de John")
 
 
 DataRecord.create( device_id: 'ABC000111', timestamp: Date.new(2018, 10, 17), sensor_id: 1, data: 15 )
+
