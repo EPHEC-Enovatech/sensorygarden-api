@@ -32,7 +32,7 @@ class UsersController < ApplicationController
         user = User.find_by(email: params[:email])
         if user
             user.update_attributes(confirm_email: true)
-            render json: { status: "SUCCESS", message: "Votre email a été confirmer" }, status: :ok
+            render json: { status: "SUCCESS", message: "Votre email a été confirmé" }, status: :ok
         else
             render json: { status: "ERROR", message: "Il n'existe pas d'utilisateur avec cet email", debug: params[:email] }, status: :not_found
         end
