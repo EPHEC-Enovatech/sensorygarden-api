@@ -16,7 +16,7 @@ class UsersController < ApplicationController
         user = User.new(user_params)
         if user.save
             ContactMailer.user_signup(user).deliver
-            render json: {status: "SUCCESS", message: "Vous avez bien été inscrit", data: user}, status: :ok
+            render json: {status: "SUCCESS", message: "Vous avez bien été inscrit. Vérifiez votre boite mail pour confirmer votre compte.", data: user}, status: :ok
         else
             render json: {status: "ERROR", message: "Impossible de terminer l'inscription", data: user.errors}, status: :unprocessable_entity
         end 
