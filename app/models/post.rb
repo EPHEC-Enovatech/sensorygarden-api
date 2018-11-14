@@ -1,7 +1,8 @@
 class Post < ApplicationRecord
     has_one :categories, dependent: :destroy
+    has_many :comments, through: :comments_posts
 
-    validate :postTitle, presence: true
-    validate :postText, presence: true,
+    validates :postTitle, presence: true
+    validates :postText, presence: true,
     
 end
