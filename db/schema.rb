@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_161703) do
+ActiveRecord::Schema.define(version: 2018_11_14_175147) do
+
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "categoryName", null: false
+    t.index ["categoryName"], name: "index_categories_on_categoryName", unique: true
+  end
 
   create_table "data_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "device_id", null: false
@@ -29,6 +34,16 @@ ActiveRecord::Schema.define(version: 2018_11_10_161703) do
     t.index ["user_id"], name: "fk_rails_410b63ef65"
   end
 
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "postTitle", null: false
+    t.bigint "user_id", null: false
+    t.text "postText", null: false
+    t.timestamp "postDate", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "fk_rails_9b1b26f040"
+    t.index ["user_id"], name: "fk_rails_5b5ddfd518"
+  end
+
   create_table "sensors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "sensorName", null: false
     t.string "sensorUnit", null: false
@@ -45,4 +60,6 @@ ActiveRecord::Schema.define(version: 2018_11_10_161703) do
   add_foreign_key "data_records", "devices", primary_key: "device_id", on_delete: :cascade
   add_foreign_key "data_records", "sensors", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade
+  add_foreign_key "posts", "categories", on_delete: :cascade
+  add_foreign_key "posts", "users", on_delete: :cascade
 end
