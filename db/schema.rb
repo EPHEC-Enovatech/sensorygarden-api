@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_161703) do
+ActiveRecord::Schema.define(version: 2018_11_15_141823) do
+
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "categoryName", null: false
+    t.index ["categoryName"], name: "index_categories_on_categoryName", unique: true
+  end
+
+  create_table "categories_posts", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_categories_posts_on_category_id"
+    t.index ["post_id"], name: "index_categories_posts_on_post_id"
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "commentText", null: false
+    t.timestamp "commentDate", null: false
+    t.index ["user_id"], name: "fk_rails_03de2dc08c"
+  end
+
+  create_table "comments_posts", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "comment_id", null: false
+    t.index ["comment_id"], name: "index_comments_posts_on_comment_id"
+    t.index ["post_id"], name: "index_comments_posts_on_post_id"
+  end
 
   create_table "data_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "device_id", null: false
@@ -29,6 +55,16 @@ ActiveRecord::Schema.define(version: 2018_11_10_161703) do
     t.index ["user_id"], name: "fk_rails_410b63ef65"
   end
 
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "postTitle", null: false
+    t.bigint "user_id", null: false
+    t.text "postText", null: false
+    t.timestamp "postDate", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "fk_rails_9b1b26f040"
+    t.index ["user_id"], name: "fk_rails_5b5ddfd518"
+  end
+
   create_table "sensors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "sensorName", null: false
     t.string "sensorUnit", null: false
@@ -42,7 +78,13 @@ ActiveRecord::Schema.define(version: 2018_11_10_161703) do
     t.boolean "confirm_email", default: false
   end
 
+  add_foreign_key "categories_posts", "categories", on_delete: :cascade
+  add_foreign_key "categories_posts", "posts", on_delete: :cascade
+  add_foreign_key "comments", "users", on_delete: :cascade
+  add_foreign_key "comments_posts", "comments", on_delete: :cascade
+  add_foreign_key "comments_posts", "posts", on_delete: :cascade
   add_foreign_key "data_records", "devices", primary_key: "device_id", on_delete: :cascade
   add_foreign_key "data_records", "sensors", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade
+  add_foreign_key "posts", "users", on_delete: :cascade
 end
