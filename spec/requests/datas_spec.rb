@@ -117,6 +117,20 @@ RSpec.describe 'Data records management' do
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
         end
+
+        it 'supports getting a /records/:device_id/all/:date that returns all the data for the given day' do
+            get '/records/ABC000111/all/17-10-2018', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if thre is no record for the device for this day' do
+            get '/records/ABC000111/all/17-10-2019', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
     end
 
     describe 'POST /records/:data_type' do

@@ -49,6 +49,16 @@ class DatasController < ApplicationController
     )
   end
 
+  def show_all
+    date = Date.strptime(params[:date], '%d-%m-%Y')
+    records = DataRecord.where(device_id: params[:device_id], timestamp: (date.midnight)..date.midnight+1.day)
+    check_record_blank(
+      records,
+      'All records for requested device for requested day',
+      'No record found for requested device for requested day'
+    )
+  end
+
   def get_last_record_date
     return unless sensor_id = get_sensor_id(params[:data_type])
     timestamp = DataRecord.where(device_id: params[:device_id], sensor_id: sensor_id).order("timestamp").select(:id, :timestamp).last
