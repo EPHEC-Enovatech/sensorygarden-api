@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-    before_action :authenticate_user, except: [:create, :confirm_email]
+    before_action :authenticate_user, except: [:create, :confirm_email, :send_reset_password, :reset_password]
 
     def index
         users = User.all
@@ -22,10 +22,31 @@ class UsersController < ApplicationController
         end 
     end
 
+    def send_reset_password
+        user = User.find_by(email: params[:email])
+        if user
+            user.regenerate_reset_token
+            ContactMailer.password_reset(user).deliver
+            render json: { status: 'SUCCESS', message: "Email de récupération de mot de passe envoyé !" }, status: :ok
+        else
+            render json: { status: 'ERROR', message: "Aucun utilisateur connu avec cet email" }, status: :not_found
+        end
+    end
+
     def update
         user = User.find(params[:id])
-        user.update_attributes(user_params)
+        user.update_attributes(update_params)
         render json: {status: "SUCCESS", message: "Informations mises à jour", data: user}, status: :ok              
+    end
+
+    def reset_password
+        user = User.find_by(reset_token: params[:token])
+        if user 
+            user.update_attributes(password_params)
+            render json: { status: "SUCCESS", message: "Mot de passe mis à jour" }, status: :ok
+        else
+            render json: { status: "ERROR", message: "Le token est incorrecte !" }, status: :not_found
+        end
     end
 
     def confirm_email
@@ -41,7 +62,7 @@ class UsersController < ApplicationController
     def destroy
         user = User.find(params[:id])
         user.destroy
-        render json: {status: "SUCCESS", message: "User deleted", data: user}, status: :ok        
+        render json: {status: "SUCCESS", message: "User deleted", data: user}, status: :ok
     end
 
     private 
@@ -50,4 +71,11 @@ class UsersController < ApplicationController
         params.permit(:nom, :prenom, :email, :password, :password_confirmation)
     end
 
+    def update_params
+        params.permit(:nom, :prenom, :email)
+    end
+
+    def password_params
+        params.permit(:password, :password_confirmation)
+    end
 end

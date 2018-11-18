@@ -86,6 +86,22 @@ RSpec.describe 'Users management' do
         end
     end
 
+    describe 'POST /reset' do
+        it 'returns a status message' do
+            post '/reset', :params => { email: "john@doe.com" }
+            json = JSON.parse(response.body)
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the user does not exist' do
+            post '/reset', :params => { email: "someone@something.com" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+    end
+
     describe 'PATCH /users/:id' do
         it "returns a status message (ERROR) if the resquested id doesn't exists" do
             patch '/users/42', :headers => { Authorization: "Bearer #{@token}"}
@@ -107,8 +123,10 @@ RSpec.describe 'Users management' do
             patch '/users/1'
             expect(response.status).to eql(401)
         end
+    end
 
-        it 'supports getting a /users/confirm/:email in order to confirm the user email' do
+    describe "PATCH /confirm/:email" do
+        it 'returns a status message' do
             patch '/confirm', :params => { email: 'jane@doe.com' }
             json = JSON.parse response.body
             expect(json['status']).to eql('SUCCESS')
@@ -123,12 +141,30 @@ RSpec.describe 'Users management' do
         end
     end
 
+    describe 'PATCH /reset' do
+        it 'returns a status message' do
+            reset_token = User.find(2).reset_token
+            patch '/reset', :params => { token: reset_token, password: "password", password_confirmation: "password" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the token does not exist' do
+            patch '/reset', :params => { token: "bad token", password: 'password', password_confirmation: 'password' }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+    end
+
     describe 'DELETE /users/:id' do
         it "returns a status message (ERROR) if the resquested id doesn't exists" do
             delete '/users/42', :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse(response.body)
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
+
         end
 
         it 'returns a status message' do

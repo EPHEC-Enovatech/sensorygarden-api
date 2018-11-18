@@ -18,4 +18,10 @@ class ContactMailer < ApplicationMailer
 
       mail from: 'noreply@sensorygarden.be', to: @user[:email], subject: "Bienvenue #{@user[:prenom]} !"
   end
+
+  def password_reset(user)
+    @user = user
+
+    mail from: 'noreply@sensorygarden.be', to: @user[:email], subject: "Mot de passe oublié sur Sensorygarden.be"
+  end
 end

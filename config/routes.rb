@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # Users management
   resources :users
   patch '/confirm' => "users#confirm_email"
+  post '/reset' => "users#send_reset_password"
+  patch '/reset' => "users#reset_password"
 
   # Devices management
   get 'devices' => 'devices#index'
