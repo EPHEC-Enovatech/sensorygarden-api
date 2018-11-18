@@ -25,7 +25,8 @@ class UsersController < ApplicationController
     def send_reset_password
         user = User.find_by(email: params[:email])
         if user
-           ContactMailer.password_reset(user).deliver
+            user.regenerate_reset_token
+            ContactMailer.password_reset(user).deliver
             render json: { status: 'SUCCESS', message: "Email de récupération de mot de passe envoyé !" }, status: :ok
         else
             render json: { status: 'ERROR', message: "Aucun utilisateur connu avec cet email" }, status: :not_found
