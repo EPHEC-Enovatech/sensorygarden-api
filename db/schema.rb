@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_141823) do
+ActiveRecord::Schema.define(version: 2018_11_18_193536) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "categoryName", null: false
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2018_11_15_141823) do
     t.string "email", null: false
     t.string "password_digest"
     t.boolean "confirm_email", default: false
+    t.string "reset_token"
+    t.index ["reset_token"], name: "index_users_on_reset_token", unique: true
   end
 
   add_foreign_key "categories_posts", "categories", on_delete: :cascade
