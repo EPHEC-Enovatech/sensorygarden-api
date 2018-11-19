@@ -42,11 +42,7 @@ class UsersController < ApplicationController
     def reset_password
         user = User.find_by(reset_token: params[:token])
         if user 
-            if user.update_attributes(password_params)
-                render json: { status: "SUCCESS", message: "Mot de passe mis à jour" }, status: :ok
-            else
-                render json: { status: "ERROR", message: "Erreur de modification", data: user.errors }, status: :unprocessable_entity
-            end
+            check_password_change(user)
         else
             render json: { status: "ERROR", message: "Le token est incorrecte !" }, status: :not_found
         end
@@ -66,8 +62,7 @@ class UsersController < ApplicationController
         user = User.find(params[:user_id])
         if user 
             if user.authenticate(params[:old_password])
-                user.update_attributes(password_params)
-                render json: { status: "SUCCESS", message: "Le mot de passe a été correctement mis à jour" }, status: :ok
+                check_password_change(user)
             else
                 render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
             end
@@ -92,5 +87,13 @@ class UsersController < ApplicationController
 
     def password_params
         params.permit(:password, :password_confirmation)
+    end
+
+    def check_password_change(user)
+        if user.update_attributes(password_params)
+            render json: { status: "SUCCESS", message: "Le mot de passe a été correctement mis à jour" }, status: :ok
+        else
+            render json: { status: "ERROR", message: "Erreur de modification", data: user.errors }, status: :unprocessable_entity
+        end
     end
 end
