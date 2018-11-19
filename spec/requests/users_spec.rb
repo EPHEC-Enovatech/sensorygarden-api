@@ -185,6 +185,13 @@ RSpec.describe 'Users management' do
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(422)
         end
+
+        it 'returns a status message (ERROR) if the password and password_confirmation do not match' do
+            patch '/reset/3', :headers => { Authorization: "Bearer #{@token}" }, :params => { old_password: "password", password: "something", password_confirmation: "something_else" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(422)
+        end
     end
 
     describe 'DELETE /users/:id' do
