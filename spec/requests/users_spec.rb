@@ -157,6 +157,14 @@ RSpec.describe 'Users management' do
             expect(response.status).to eql(404)
         end
 
+        it 'returns a status message (ERROR) if the password and password_confirmation do not match' do
+            reset_token = User.find(2).reset_token
+            patch '/reset', :params => { token: reset_token, password: 'something', password_confirmation: 'something_else' }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(422)
+        end
+
         it 'supports getting a user_id to change the password giving the old password' do
             patch '/reset/3', :headers => { Authorization: "Bearer #{@token}" }, :params => { old_password: "1234", password: "password", password_confirmation: "password" }
             json = JSON.parse response.body
