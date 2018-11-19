@@ -42,8 +42,11 @@ class UsersController < ApplicationController
     def reset_password
         user = User.find_by(reset_token: params[:token])
         if user 
-            user.update_attributes(password_params)
-            render json: { status: "SUCCESS", message: "Mot de passe mis à jour" }, status: :ok
+            if user.update_attributes(password_params)
+                render json: { status: "SUCCESS", message: "Mot de passe mis à jour" }, status: :ok
+            else
+                render json: { status: "ERROR", message: "Erreur de modification", data: user.errors }, status: :unprocessable_entity
+            end
         else
             render json: { status: "ERROR", message: "Le token est incorrecte !" }, status: :not_found
         end
