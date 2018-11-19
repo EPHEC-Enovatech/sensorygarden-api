@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   patch '/confirm' => "users#confirm_email"
   post '/reset' => "users#send_reset_password"
   patch '/reset' => "users#reset_password"
+  patch '/reset/:user_id' => "users#change_password"
 
   # Devices management
   get 'devices' => 'devices#index'
