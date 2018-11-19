@@ -39,6 +39,10 @@ module SensorygardenApi
         origins 'https://sensorygarden.be'
         resource '*', :headers => :any, :methods => :any
       end
+      allow do
+        origins 'https://www.sensorygarden.be'
+        resource '*', :headers => :any, :methods => :any
+      end
     end
   end
 end
