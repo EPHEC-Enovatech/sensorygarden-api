@@ -55,7 +55,19 @@ class UsersController < ApplicationController
             user.update_attributes(confirm_email: true)
             render json: { status: "SUCCESS", message: "Votre email a été confirmé" }, status: :ok
         else
-            render json: { status: "ERROR", message: "Il n'existe pas d'utilisateur avec cet email", debug: params[:email] }, status: :not_found
+            render json: { status: "ERROR", message: "Il n'existe pas d'utilisateur avec cet email" }, status: :not_found
+        end
+    end
+
+    def change_password
+        user = User.find(params[:user_id])
+        if user 
+            if user.authenticate(params[:old_password])
+                user.update_attributes(password_params)
+                render json: { status: "SUCCESS", message: "Le mot de passe a été correctement mis à jour" }, status: :ok
+            else
+                render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
+            end
         end
     end
 

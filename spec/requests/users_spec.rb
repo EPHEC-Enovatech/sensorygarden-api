@@ -156,6 +156,27 @@ RSpec.describe 'Users management' do
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
         end
+
+        it 'supports getting a user_id to change the password giving the old password' do
+            patch '/reset/3', :headers => { Authorization: "Bearer #{@token}" }, :params => { old_password: "1234", password: "password", password_confirmation: "password" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('SUCCESS')
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the user does not exist' do
+            patch '/reset/42', :headers => { Authorization: "Bearer #{@token}" }, :params => { old_password: "1234", password: "password", password_confirmation: "password" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(404)
+        end
+
+        it 'returns a status message (ERROR) if the old password does not match' do
+            patch '/reset/3', :headers => { Authorization: "Bearer #{@token}" }, :params => { old_password: "bad_password", password: "password", password_confirmation: "password" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(422)
+        end
     end
 
     describe 'DELETE /users/:id' do
