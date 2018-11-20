@@ -6,6 +6,11 @@ class CategoriesController < ApplicationController
         render json: { status: 'SUCCESS', message: "All current catogries in database", data: Category.all }, status: :ok
     end
 
+    def show
+        category = Category.find(params[:id])
+        render json: { status: 'SUCCESS', message: "Category #{params[:token]}", data: category }, status: :ok
+    end
+
     def create
         category = Category.new(categories_params)
         if category.save

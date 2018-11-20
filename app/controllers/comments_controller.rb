@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+
+    before_action :authenticate_user
+
     def index
         render json: { status: 'SUCCESS', message: 'All comments currently in database', data: Comment.all }, status: :ok
     end
