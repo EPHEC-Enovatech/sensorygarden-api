@@ -36,4 +36,10 @@ Rails.application.routes.draw do
   # Contact
   post 'contact' => 'contact#send_contact_demand'
 
+  # Categories
+  get '/categories' => 'categories#index'
+  post '/categories' => 'categories#create'
+  patch '/categories/:id' => 'categories#update'
+  delete '/categories/:id' => 'categories#destroy'
+
 end
