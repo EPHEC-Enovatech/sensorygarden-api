@@ -82,6 +82,18 @@ RSpec.describe 'Posts management' do
             expect(json['status']).to eql("ERROR")
             expect(response.status).to eql(422)
         end
+
+        it 'returns a status message (ERROR) if the categories parameter is not an array' do
+            post '/posts', :headers => { Authorization: "Bearer #{@token}" }, :params => { 
+                postTitle: "test",
+                postText: "test",
+                user_id: 1,
+                categories: 1
+             }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(422)
+        end
     end
 
     describe 'PATCH /posts/:id' do
