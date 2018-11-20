@@ -11,8 +11,14 @@ class PostsController < ApplicationController
 
     def create
         post = Post.new(posts_params)
-        params[:categories].each do |id|
-            post.categories << Category.find(id)
+
+        if params[:categories].kind_of?(Array)
+            params[:categories].each do |id|
+                post.categories << Category.find(id)
+            end
+        else
+            render json: { status: 'ERROR', message: 'The categories parameter is not an array' }, status: :unprocessable_entity
+            return
         end
         begin
             if post.save 
