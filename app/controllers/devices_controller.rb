@@ -24,7 +24,7 @@ class DevicesController < ApplicationController
         rescue ActiveRecord::InvalidForeignKey => exception
             render json: { status: 'ERROR', message: 'Erreur : le user-id n\'existe pas', data: exception.message }, status: :not_found
         rescue ActiveRecord::RecordNotUnique => exception
-        render json: { status: 'ERROR', message: 'Erreur : ce Sensory Captor existe déjà', data: exception.message }, status: :unprocessable_entity
+            render json: { status: 'ERROR', message: 'Erreur : ce Sensory Captor existe déjà', data: exception.message }, status: :unprocessable_entity
         else
             render json: { status: 'SUCCESS', message: "Sauvegarde réussie !", data: device }, status: :ok
         end
