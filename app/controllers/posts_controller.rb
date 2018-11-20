@@ -1,11 +1,12 @@
 class PostsController < ApplicationController
     def index
-        render json: { status: 'SUCCESS', message: 'All current posts in database', data: Post.all }, status: :ok
+        posts = Post.all.to_json(:include => :categories)
+        render json: { status: 'SUCCESS', message: 'All current posts in database', data: JSON.parse(posts) }, status: :ok
     end
 
     def show
-        post = Post.find(params[:id])
-        render json: { status: 'SUCCESS', message: "Post #{params[:id]}", data: post }, status: :ok
+        post = Post.find(params[:id]).to_json(:include => :categories)
+        render json: { status: 'SUCCESS', message: "Post #{params[:id]}", data: JSON.parse(post) }, status: :ok
     end
 
     def create
