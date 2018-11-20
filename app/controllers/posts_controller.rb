@@ -10,6 +10,9 @@ class PostsController < ApplicationController
 
     def create
         post = Post.new(posts_params)
+        params[:categories].each do |id|
+            post.categories << Category.find(id)
+        end
         begin
             if post.save 
                 render json: { status: 'SUCCESS', message: 'Post created', data: post }, status: :created
@@ -18,20 +21,6 @@ class PostsController < ApplicationController
             end
         rescue ActiveRecord::InvalidForeignKey => exception
             render json: { status: 'ERROR', message: 'Error: the user_id does not exist', data: exception.message }, status: :unprocessable_entity 
-        end
-    end
-
-    def add_categs
-        if params[:categories].blank?
-            render json: { status: 'ERROR', message: 'No categories passed' }, status: :unprocessable_entity
-        else
-            Post.find(params[:id])
-            categ = []
-            params[:categories].each do |category|
-                categ.push({ post_id: params[:id], category_id: category })
-            end
-            categories = CategoriesPost.create(categ)
-            render json: { status: 'SUCCESS', message: 'Categories added', data: categories }, status: :created
         end
     end
 
