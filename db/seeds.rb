@@ -24,3 +24,8 @@ Device.create( device_id: 'ABC000111', user_id: 1, deviceName: "Potager de John"
 
 DataRecord.create( device_id: 'ABC000111', timestamp: Date.new(2018, 10, 17), sensor_id: 1, data: 15 )
 
+Category.create( [
+    { categoryName: "Category 1" },
+    { categoryName: "Category 2" }
+])
+
