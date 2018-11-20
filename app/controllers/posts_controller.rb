@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     end
 
     def show
-        post = Post.find(params[:id]).to_json(:include => :categories)
+        post = Post.find(params[:id]).to_json(:include => [:categories, :comments])
         render json: { status: 'SUCCESS', message: "Post #{params[:id]}", data: JSON.parse(post) }, status: :ok
     end
 
