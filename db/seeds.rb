@@ -53,3 +53,8 @@ CategoriesPost.create([
         category_id: 2
     }
 ])
+
+Comment.create([
+    { commentText: "Comment 1", user_id: 1, post_id: 1, commentDate: DateTime.now },
+    { commentText: "Comment 2", user_id: 1, post_id: 1, commentDate: DateTime.now }
+])
