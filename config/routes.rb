@@ -42,4 +42,8 @@ Rails.application.routes.draw do
   patch '/categories/:id' => 'categories#update'
   delete '/categories/:id' => 'categories#destroy'
 
+  # Posts
+  resources :posts 
+  post '/posts/:id' => 'posts#add_categs'
+
 end

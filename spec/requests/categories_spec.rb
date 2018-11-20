@@ -61,7 +61,7 @@ RSpec.describe 'Categories management' do
         end
     end
 
-    describe 'PACTH /categories/:id' do
+    describe 'PATCH /categories/:id' do
         it 'returns a status message' do
             patch '/categories/2', :headers => { Authorization: "Bearer #{@token}" }, :params => { categoryName: "Category 2 Changed" }
             json = JSON.parse response.body
