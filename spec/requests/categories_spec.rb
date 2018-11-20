@@ -32,6 +32,20 @@ RSpec.describe 'Categories management' do
             expect(response.status).to eql(200)
         end
 
+        it 'supports getting an :id' do
+            get '/categories/1', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("SUCCESS")
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the id does not exist' do
+            get '/categories/42', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(404)
+        end
+
         it 'get a status 401 Unauthorized if missing the authorization token in the header' do
             get '/categories'
             expect(response.status).to eql(401)

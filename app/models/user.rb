@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
     has_many :devices, dependent: :destroy
     has_many :posts, dependent: :destroy
+    has_many :comments, dependent: :destroy
 
     validates :nom, presence: true
     validates :prenom, presence: true
