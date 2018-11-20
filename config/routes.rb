@@ -43,7 +43,6 @@ Rails.application.routes.draw do
   delete '/categories/:id' => 'categories#destroy'
 
   # Posts
-  resources :posts 
-  post '/posts/:id' => 'posts#add_categs'
+  resources :posts
 
 end

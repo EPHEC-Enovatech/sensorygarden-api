@@ -52,7 +52,8 @@ RSpec.describe 'Posts management' do
             post '/posts', :headers => { Authorization: "Bearer #{@token}" }, :params => { 
                 postTitle: "Test post", 
                 user_id: 1, 
-                postText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nunc nibh, vitae ultrices massa rutrum eu."
+                postText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nunc nibh, vitae ultrices massa rutrum eu.",
+                categories: [1]
             }
             json = JSON.parse response.body
             expect(json['status']).to eql("SUCCESS")
@@ -62,7 +63,8 @@ RSpec.describe 'Posts management' do
         it 'returns a status message (ERROR) if missing parameters' do
             post '/posts', :headers => { Authorization: "Bearer #{@token}" }, :params => { 
                 postTitle: "Test post", 
-                user_id: 1
+                user_id: 1,
+                categories: [1]
              }
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
@@ -79,27 +81,6 @@ RSpec.describe 'Posts management' do
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
             expect(response.status).to eql(422)
-        end
-
-        it 'supports getting an :id in order to add categories to the post' do
-            post '/posts/1', :headers => { Authorization: "Bearer #{@token}" }, :params => { categories: [1, 2] }
-            json = JSON.parse response.body
-            expect(json['status']).to eql("SUCCESS")
-            expect(response.status).to eql(201)
-        end
-
-        it 'returns a status message (ERROR) if no category is passed' do
-            post '/posts/1', :headers => { Authorization: "Bearer #{@token}" }
-            json = JSON.parse response.body
-            expect(json['status']).to eql("ERROR")
-            expect(response.status).to eql(422)
-        end
-
-        it 'returns a status message (ERROR) if the post_id does not exist' do
-            post '/posts/42', :headers => { Authorization: "Bearer #{@token}" }, :params => { categories: [1, 2] }
-            json = JSON.parse response.body
-            expect(json['status']).to eql("ERROR")
-            expect(response.status).to eql(404)
         end
     end
 
