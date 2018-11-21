@@ -3,7 +3,7 @@ class PostsController < ApplicationController
     before_action :authenticate_user
 
     def index
-        posts = Post.all.to_json(:include => [:categories, :comments])
+        posts = Post.order('postDate desc').all.to_json(:include => [:categories, :comments])
         render json: { status: 'SUCCESS', message: 'All current posts in database', data: JSON.parse(posts) }, status: :ok
     end
 
