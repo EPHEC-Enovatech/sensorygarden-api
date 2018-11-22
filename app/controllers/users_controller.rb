@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     end
 
     def confirm_email
-        user = User.find_by(confirm_token: params[:confirm_token])
+        user = User.find_by(confirm_token: params[:token])
         if user
             user.update_attributes(confirm_email: true)
             render json: { status: "SUCCESS", message: "Votre email a été confirmé" }, status: :ok
