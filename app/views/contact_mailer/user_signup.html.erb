@@ -4,4 +4,4 @@
 
 <p>Afin de te connecter à notre plateforme, tu dois confirmer ton adresse email en cliquant sur le lien ci-dessous !</p>
 
-<%= link_to 'Comfirmer mon email', "https://sensorygarden.be/mailConfirm.html?email=#{@user[:email]}" %>
+<%= link_to 'Comfirmer mon email', "https://sensorygarden.be/mailConfirm.html?token=#{@user[:confirm_token]}" %>

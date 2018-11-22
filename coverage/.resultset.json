@@ -54,6 +54,10 @@
         1,
         1,
         null,
+        1,
+        1,
+        1,
+        null,
         null,
         null,
         null
@@ -383,6 +387,7 @@
         null
       ],
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/models/user.rb": [
+        1,
         1,
         1,
         1,
@@ -1033,6 +1038,6 @@
         null
       ]
     },
-    "timestamp": 1542821492
+    "timestamp": 1542885330
   }
 }

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     has_secure_token :reset_token
+    has_secure_token :confirm_token
 
     has_many :devices, dependent: :destroy
     has_many :posts, dependent: :destroy

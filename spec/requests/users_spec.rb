@@ -125,16 +125,17 @@ RSpec.describe 'Users management' do
         end
     end
 
-    describe "PATCH /confirm/:email" do
+    describe "PATCH /confirm" do
         it 'returns a status message' do
-            patch '/confirm', :params => { email: 'jane@doe.com' }
+            token = User.find(2).confirm_token
+            patch '/confirm', :params => { confirm_token: token }
             json = JSON.parse response.body
             expect(json['status']).to eql('SUCCESS')
             expect(response.status).to eql(200)
         end
 
         it 'returns a status message (ERROR) if the email does not exist' do
-            patch '/confirm', :params => { email: "someone@something.net" }
+            patch '/confirm', :params => { confirm_token: "bad token" }
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
