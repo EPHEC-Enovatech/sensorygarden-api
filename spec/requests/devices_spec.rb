@@ -59,7 +59,7 @@ RSpec.describe 'Devices management' do
 
     describe 'POST /devices/:user_id' do
         it 'returns a status message' do
-            post '/devices/1', :params => { device_id: 'ABC000222', deviceName: "Test device", checksum: 89 }, :headers => { Authorization: "Bearer #{@token}"}
+            post '/devices/1', :params => { device_id: 'ABC000222', deviceName: "Test device", checksum: 87 }, :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse response.body
             expect(json['status']).to eql('SUCCESS')
             expect(response.status).to eql(200)
@@ -73,21 +73,21 @@ RSpec.describe 'Devices management' do
         end
 
         it 'returns a status message (ERROR) if missing argument' do
-            post '/devices/1', :params => { device_id: 'ABC000222', checksum: 89 }, :headers => { Authorization: "Bearer #{@token}"}
+            post '/devices/1', :params => { device_id: 'ABC000222', checksum: 87 }, :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(422)
         end
 
         it 'returns a status message (ERROR) if device_id already exists' do
-            post '/devices/1', :params => { device_id: 'ABC000111', deviceName: "Test device", checksum: 68 }, :headers => { Authorization: "Bearer #{@token}"}
+            post '/devices/1', :params => { device_id: 'ABC000111', deviceName: "Test device", checksum: 63 }, :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(422)
         end
 
         it "retuns a status message (ERROR) if the requested user_id doesn't exists" do
-            post '/devices/42', :params => { device_id: 'DEF000333', deviceName: "Test device", checksum: 22 }, :headers => { Authorization: "Bearer #{@token}"}
+            post '/devices/42', :params => { device_id: 'DEF000333', deviceName: "Test device", checksum: 32 }, :headers => { Authorization: "Bearer #{@token}"}
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
