@@ -13,15 +13,10 @@ class CommentsController < ApplicationController
 
     def create
         comment = Comment.new(comments_params)
-        begin
-            comment.save
-            render json: { status: 'SUCCESS', message: 'Comment created', data: comment }, status: :created
-        rescue ActiveRecord::NotNullViolation => exception
-            render json: { status: 'ERROR', message: 'user_id or post_id can not be null', data: exception.message }, status: :unprocessable_entity
-        rescue ActiveRecord::InvalidForeignKey => exception
-            render json: { status: 'ERROR', message: 'user_id or post_id does not exist', data: exception.message }, status: :unprocessable_entity
-        end
-        
+        comment.post = Post.find(params[:post_id])
+        comment.user = User.find(params[:user_id])
+        comment.save
+        render json: { status: 'SUCCESS', message: 'Comment created', data: comment }, status: :created
     end
 
     def update
@@ -40,7 +35,7 @@ class CommentsController < ApplicationController
 
     def comments_params
         params[:commentDate] = DateTime.now
-        params.permit(:commentText, :user_id, :post_id, :commentDate)
+        params.permit(:commentText, :commentDate)
     end
 
     def change_params

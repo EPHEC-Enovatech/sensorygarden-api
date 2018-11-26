@@ -59,21 +59,21 @@ RSpec.describe 'Comments management' do
             post '/comments', :headers => { Authorization: "Bearer #{@token}" }, :params => { commentText: "Test comment", post_id: 1 }
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
-            expect(response.status).to eql(422)
+            expect(response.status).to eql(404)
         end
 
         it 'returns a status message (ERROR) if the user_id does not exist' do
             post '/comments', :headers => { Authorization: "Bearer #{@token}" }, :params => { commentText: "Test comment", user_id: 42, post_id: 1 }
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
-            expect(response.status).to eql(422)
+            expect(response.status).to eql(404)
         end
 
         it 'returns a status message (ERROR) if the post_id does not exist' do
             post '/comments', :headers => { Authorization: "Bearer #{@token}" }, :params => { commentText: "Test comment", user_id: 1, post_id: 42 }
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
-            expect(response.status).to eql(422)
+            expect(response.status).to eql(404)
         end
     end
 
