@@ -24,6 +24,6 @@ class User < ApplicationRecord
     end
 
     def to_token_payload
-        { exp: 1.day.after.to_time.to_i, sub: self.id, admin: self.isAdmin? }
+        { sub: self.id, admin: self.isAdmin? }
     end
 end
