@@ -5,12 +5,12 @@ class PostsController < ApplicationController
     before_action :authenticate_user
 
     def index
-        posts = Post.order('postDate desc').all.to_json(:include => [:categories, :comments])
+        posts = Post.order('postDate desc').all.to_json(:include => { :user => { :only => [:nom, :prenom, :email] }, :categories => {}, :comments => {} })
         render json: { status: 'SUCCESS', message: 'All current posts in database', data: JSON.parse(posts) }, status: :ok
     end
 
     def show
-        post = Post.find(params[:id]).to_json(:include => [:categories, :comments])
+        post = Post.find(params[:id]).to_json(:include => {:user => {:only => [:nom, :prenom, :email]}, :categories => {}, :comments => { :include => {:user => {:only => [:nom, :prenom, :email]}}}})
         render json: { status: 'SUCCESS', message: "Post #{params[:id]}", data: JSON.parse(post) }, status: :ok
     end
 
@@ -25,14 +25,10 @@ class PostsController < ApplicationController
             render json: { status: 'ERROR', message: 'The categories parameter is not an array' }, status: :unprocessable_entity
             return
         end
-        begin
-            if post.save 
-                render json: { status: 'SUCCESS', message: 'Post created', data: post }, status: :created
-            else
-                render json: { status: 'ERROR', message: 'Post creation failed', data: post.errors }, status: :unprocessable_entity
-            end
-        rescue ActiveRecord::InvalidForeignKey => exception
-            render json: { status: 'ERROR', message: 'Error: the user_id does not exist', data: exception.message }, status: :unprocessable_entity 
+        if post.save 
+            render json: { status: 'SUCCESS', message: 'Post created', data: post }, status: :created
+        else
+            render json: { status: 'ERROR', message: 'Post creation failed', data: post.errors }, status: :unprocessable_entity
         end
     end
 
