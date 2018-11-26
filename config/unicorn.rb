@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rails'
 require 'knock'
 require 'rack/cors'
+require 'sanitize'
 
 root = "/var/www/api.sensorygarden.be/current"
 working_directory root
