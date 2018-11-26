@@ -1,3 +1,5 @@
+include ERB::Util
+
 class PostsController < ApplicationController
 
     before_action :authenticate_user
@@ -50,10 +52,14 @@ class PostsController < ApplicationController
 
     def posts_params
         params[:postDate] = DateTime.now
+        params[:postTitle] = h(params[:postTitle])
+        params[:postText] = h(params[:postText])
         params.permit(:postTitle, :postText, :user_id, :postDate)
     end
 
     def change_params
+        params[:postTitle] = h(params[:postTitle])
+        params[:postText] = h(params[:postText])
         params.permit(:postTitle, :postText)
     end
 end

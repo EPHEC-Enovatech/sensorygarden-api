@@ -527,16 +527,6 @@
         null,
         null,
         null,
-        1,
-        18,
-        null,
-        null,
-        1,
-        5,
-        18,
-        null,
-        null,
-        null,
         null
       ],
       "/Users/Adrien/Dev/projet-integration/sensorygarden-api/app/controllers/comments_controller.rb": [
@@ -864,6 +854,8 @@
         1,
         null,
         1,
+        null,
+        1,
         1,
         1,
         null,
@@ -1078,6 +1070,6 @@
         null
       ]
     },
-    "timestamp": 1543235770
+    "timestamp": 1543244015
   }
 }
