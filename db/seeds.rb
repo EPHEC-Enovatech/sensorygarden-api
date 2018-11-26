@@ -14,9 +14,9 @@ Sensor.create([
 ])
 
 User.create([
-    { nom: "Doe", prenom: "John", email: "john@doe.com", password: '1234', password_confirmation: '1234', confirm_email: true },
-    { nom: "Doe", prenom: "Jane", email: "jane@doe.com", password: '1234', password_confirmation: '1234', confirm_email: false },
-    { nom: "Password", prenom: "Reset test", email: "pass@reset.com", password: '1234', password_confirmation: "1234", confirm_email: true }
+    { nom: "Doe", prenom: "John", email: "john@doe.com", password: '1234', password_confirmation: '1234', confirm_email: true, admin: true },
+    { nom: "Doe", prenom: "Jane", email: "jane@doe.com", password: '1234', password_confirmation: '1234', confirm_email: false, admin: false },
+    { nom: "Password", prenom: "Reset test", email: "pass@reset.com", password: '1234', password_confirmation: "1234", confirm_email: true, admin: false }
 ])
 
 Device.create( device_id: 'ABC000111', user_id: 1, deviceName: "Potager de John")

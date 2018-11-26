@@ -132,5 +132,13 @@ RSpec.describe 'Posts management' do
             expect(json['status']).to eql("ERROR")
             expect(response.status).to eql(404)
         end
+
+        it 'returns a status message (ERROR) if the user is not admin' do
+            token =  Knock::AuthToken.new(payload: { sub: 2, admin: false }).token
+            delete '/posts/1', :headers => { Authorization: "Bearer #{token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(401)
+        end
     end
 end

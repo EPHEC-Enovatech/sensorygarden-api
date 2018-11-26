@@ -19,4 +19,13 @@ class ApplicationController < ActionController::API
         end
     end
 
+    def check_current_isAdmin?
+        if current_user.isAdmin?
+            return true
+        else
+            render json: { status: 'ERROR', message: 'Vous devez être administrateur pour effectuer cette opération' }, status: :unauthorized
+            return false
+        end
+    end
+
 end

@@ -33,15 +33,19 @@ class PostsController < ApplicationController
     end
 
     def update
-        post = Post.find(params[:id])
-        post.update_attributes(change_params)
-        render json: { status: 'SUCCESS', message: 'Post updated', data: post }, status: :ok
+        if check_current_isAdmin?
+            post = Post.find(params[:id])
+            post.update_attributes(change_params)
+            render json: { status: 'SUCCESS', message: 'Post updated', data: post }, status: :ok
+        end
     end
 
     def destroy
-        post = Post.find(params[:id])
-        post.destroy
-        render json: { status: 'SUCCESS', message: 'Post deleted', data: post }, status: :ok
+        if check_current_isAdmin?
+            post = Post.find(params[:id])
+            post.destroy
+            render json: { status: 'SUCCESS', message: 'Post deleted', data: post }, status: :ok
+        end
     end
 
     private
