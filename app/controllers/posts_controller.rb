@@ -50,14 +50,10 @@ class PostsController < ApplicationController
 
     def posts_params
         params[:postDate] = DateTime.now
-        input_params = params.permit(:postTitle, :postText, :user_id, :postDate)
-        sanitize_input(input_params, [:postTitle, :postText, :user_id, :postDate])
-        input_params
+        params.permit(:postTitle, :postText, :user_id, :postDate)
     end
 
     def change_params
-        input_params = params.permit(:postTitle, :postText)
-        sanitize_input(input_params, [:postTitle, :postText])
-        input_params
+        params.permit(:postTitle, :postText)
     end
 end
