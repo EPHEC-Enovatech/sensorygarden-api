@@ -73,7 +73,7 @@ class DevicesController < ApplicationController
     def gen_checksum(param)
         result = 0
         param.length.times do |i|
-            result += param[i].ord*i+1
+            result += param[i].ord*(i+1)
         end
         return result%97
     end
