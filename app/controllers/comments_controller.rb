@@ -20,15 +20,19 @@ class CommentsController < ApplicationController
     end
 
     def update
-        comment = Comment.find(params[:id])
-        comment.update_attributes(change_params)
-        render json: { status: 'SUCCESS', message: 'Comment updated', data: comment }, status: :ok
+        if check_current_isAdmin?
+            comment = Comment.find(params[:id])
+            comment.update_attributes(change_params)
+            render json: { status: 'SUCCESS', message: 'Comment updated', data: comment }, status: :ok
+        end
     end
 
     def destroy
-        comment = Comment.find(params[:id])
-        comment.destroy
-        render json: { status: 'SUCCESS', message: 'Comment deleted', data: comment }, status: :ok
+        if check_current_isAdmin?
+            comment = Comment.find(params[:id])
+            comment.destroy
+            render json: { status: 'SUCCESS', message: 'Comment deleted', data: comment }, status: :ok
+        end
     end
 
     private 

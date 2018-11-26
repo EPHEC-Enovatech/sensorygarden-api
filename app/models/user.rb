@@ -10,11 +10,20 @@ class User < ApplicationRecord
     validates :nom, presence: true
     validates :prenom, presence: true
     validates :email, presence: true, uniqueness: true
+    # validates :admin, presence: true
 
     def self.from_token_request request
         email = request.params['auth'] && request.params['auth']['email']
         user = self.find_by email: email
         return nil unless !user.blank? && user.confirm_email
         return user
+    end
+
+    def isAdmin?
+        return self.admin
+    end
+
+    def to_token_payload
+        { exp: 1.day.after.to_time.to_i, sub: self.id, admin: self.isAdmin? }
     end
 end
