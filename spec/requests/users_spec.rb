@@ -46,6 +46,13 @@ RSpec.describe 'Users management' do
             expect(response.status).to eql(404)
         end
 
+        it 'return a stauts message (ERROR) if the current_user tries to fetch data from another user' do
+            get '/users/2', :headers => { Authorization: "Bearer #{@token}"}, :params => { fails: true }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(401)
+        end
+
         it 'return a status code 401 if missing authentication token' do
             get '/users'
             expect(response.status).to eql(401)

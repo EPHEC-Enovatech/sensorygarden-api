@@ -8,8 +8,10 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find(params[:id])
-        render json: {status: "SUCCESS", message: "User of requested Id", data: user}, status: :ok
+        if check_current_user(params[:id])
+            user = User.find(params[:id])
+            render json: {status: "SUCCESS", message: "User of requested Id", data: user}, status: :ok
+        end
     end
 
     def create
@@ -34,9 +36,11 @@ class UsersController < ApplicationController
     end
 
     def update
-        user = User.find(params[:id])
-        user.update_attributes(update_params)
-        render json: {status: "SUCCESS", message: "Informations mises à jour", data: user}, status: :ok              
+        if check_current_user(params[:id])
+            user = User.find(params[:id])
+            user.update_attributes(update_params)
+            render json: {status: "SUCCESS", message: "Informations mises à jour", data: user}, status: :ok
+        end
     end
 
     def reset_password
@@ -59,20 +63,24 @@ class UsersController < ApplicationController
     end
 
     def change_password
-        user = User.find(params[:user_id])
-        if user 
-            if user.authenticate(params[:old_password])
-                check_password_change(user)
-            else
-                render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
+        if check_current_user(params[:user_id])
+            user = User.find(params[:user_id])
+            if user 
+                if user.authenticate(params[:old_password])
+                    check_password_change(user)
+                else
+                    render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
+                end
             end
         end
     end
 
     def destroy
-        user = User.find(params[:id])
-        user.destroy
-        render json: {status: "SUCCESS", message: "User deleted", data: user}, status: :ok
+        if check_current_user(params[:id])
+            user = User.find(params[:id])
+            user.destroy
+            render json: {status: "SUCCESS", message: "User deleted", data: user}, status: :ok
+        end
     end
 
     private 
