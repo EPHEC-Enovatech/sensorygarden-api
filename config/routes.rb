@@ -48,4 +48,7 @@ Rails.application.routes.draw do
   # Checksum
   post 'checksum' => 'devices#create_checksum'
 
+  # Promote
+  post 'promote' => 'users#promote_admin'
+
 end

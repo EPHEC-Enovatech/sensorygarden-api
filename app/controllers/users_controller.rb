@@ -3,13 +3,13 @@ class UsersController < ApplicationController
     before_action :authenticate_user, except: [:create, :confirm_email, :send_reset_password, :reset_password]
 
     def index
-        users = User.select(:nom, :prenom, :email).all
+        users = User.select(:id, :nom, :prenom, :email, :admin).all
         render json: {status: "SUCCESS", message: "All users currently in DB", data: users}, status: :ok
     end
 
     def show
         if check_current_user(params[:id])
-            user = User.select(:nom, :prenom, :email).find(params[:id])
+            user = User.select(:id, :nom, :prenom, :email, :admin).find(params[:id])
             render json: {status: "SUCCESS", message: "User of requested Id", data: user}, status: :ok
         end
     end
@@ -32,6 +32,14 @@ class UsersController < ApplicationController
             render json: { status: 'SUCCESS', message: "Email de récupération de mot de passe envoyé !" }, status: :ok
         else
             render json: { status: 'ERROR', message: "Aucun utilisateur connu avec cet email" }, status: :not_found
+        end
+    end
+
+    def promote_admin
+        if check_current_isAdmin?
+            user = User.find(params[:user_id])
+            user.update_attributes(admin: true)
+            render json: { status: 'SUCCESS', message: "User #{params[:user_id]} promoted !" }, status: :ok
         end
     end
 
