@@ -114,6 +114,30 @@ RSpec.describe 'Devices management' do
         end
     end
 
+    describe 'POST /checksum' do
+        it 'returns a status message' do
+            post '/checksum', :headers => { Authorization: "Bearer #{@token}" }, :params => { device_id: "ABC000111" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("SUCCESS")
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if missing parameter' do
+            post '/checksum', :headers => { Authorization: "Bearer #{@token}" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(422)
+        end
+
+        it 'returns a status message (ERROR) if the current user is not an admin' do
+            token =  Knock::AuthToken.new(payload: { sub: 2, admin: false }).token
+            post '/checksum', :headers => { Authorization: "Bearer #{token}" }, :params => { device_id: "ABC000111" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(401)
+        end
+    end
+
     describe 'PATCH /devices/:id' do
         it 'returns a status message' do
             patch '/devices/ABC000111', :params => { deviceName: "Test device 1" }, :headers => { Authorization: "Bearer #{@token}"}
