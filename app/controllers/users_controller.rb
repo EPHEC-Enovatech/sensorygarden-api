@@ -35,6 +35,14 @@ class UsersController < ApplicationController
         end
     end
 
+    def promote_admin
+        if check_current_isAdmin?
+            user = User.find(params[:user_id])
+            user.update_attributes(admin: true)
+            render json: { status: 'SUCCESS', message: "User #{params[:user_id]} promoted !" }, status: :ok
+        end
+    end
+
     def update
         if check_current_user(params[:id])
             user = User.find(params[:id])

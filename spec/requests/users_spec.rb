@@ -149,6 +149,30 @@ RSpec.describe 'Users management' do
         end
     end
 
+    describe 'POST /promote' do
+        it 'returns a status message' do
+            post '/promote', :headers => { Authorization: "Bearer #{@token}" }, :params => { user_id: 4 }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("SUCCESS")
+            expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the user_id does not exist' do
+            post '/promote', :headers => { Authorization: "Bearer #{@token}" }, :params => { user_id: 42 }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(404)
+        end
+
+        it 'returns a status message (ERROR) if the user is not an admin' do
+            token =  Knock::AuthToken.new(payload: { sub: 2, admin: false }).token
+            post '/promote', :headers => { Authorization: "Bearer #{token}" }, :params => { user_id: 4 }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(401)
+        end
+    end
+
     describe 'PATCH /reset' do
         it 'returns a status message' do
             reset_token = User.find(2).reset_token
