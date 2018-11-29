@@ -34,6 +34,16 @@ class DevicesController < ApplicationController
         end
     end
 
+    def create_checksum
+        if check_current_isAdmin?
+            if !params[:device_id].blank?
+                render json: { status: 'SUCCESS', message: 'Generated checksum', data: gen_checksum(params[:device_id]) }, status: :ok
+            else
+                render json: { status: 'ERROR', message: 'Missing parameter' }, status: :unprocessable_entity
+            end
+        end
+    end
+
     def update
         device = Device.find_by(device_id: params[:id])
         if device

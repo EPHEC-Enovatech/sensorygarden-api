@@ -45,4 +45,7 @@ Rails.application.routes.draw do
   # Comments
   resources :comments
 
+  # Checksum
+  post 'checksum' => 'devices#create_checksum'
+
 end
