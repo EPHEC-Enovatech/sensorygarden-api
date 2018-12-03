@@ -71,14 +71,13 @@ class UsersController < ApplicationController
     end
 
     def change_password
-        if check_current_user(params[:user_id])
-            user = User.find(params[:user_id])
-            if user 
-                if user.authenticate(params[:old_password])
-                    check_password_change(user)
-                else
-                    render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
-                end
+        return unless check_current_user(params[:user_id])
+        user = User.find(params[:user_id])
+        if user 
+            if user.authenticate(params[:old_password])
+                check_password_change(user)
+            else
+                render json: { status: 'ERROR', message: "L'ancien mot de passe est incorrecte" }, status: :unprocessable_entity
             end
         end
     end
