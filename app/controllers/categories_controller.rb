@@ -15,9 +15,9 @@ class CategoriesController < ApplicationController
         if check_current_isAdmin?
             category = Category.new(categories_params)
             if category.save
-                render json: { status: 'SUCCESS', message: 'New category created', data: category }, status: :created
+                render json: { status: 'SUCCESS', message: 'La catégorie a été ajoutée', data: category }, status: :created
             else
-                render json: { status: 'ERROR', message: 'Category creation failed', data: category.errors }, status: :unprocessable_entity
+                render json: { status: 'ERROR', message: 'Cette catégories existe déjà', data: category.errors }, status: :unprocessable_entity
             end
         end
     end
