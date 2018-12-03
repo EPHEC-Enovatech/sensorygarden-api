@@ -12,11 +12,13 @@ class CategoriesController < ApplicationController
     end
 
     def create
-        category = Category.new(categories_params)
-        if category.save
-            render json: { status: 'SUCCESS', message: 'New category created', data: category }, status: :created
-        else
-            render json: { status: 'ERROR', message: 'Category creation failed', data: category.errors }, status: :unprocessable_entity
+        if check_current_isAdmin?
+            category = Category.new(categories_params)
+            if category.save
+                render json: { status: 'SUCCESS', message: 'New category created', data: category }, status: :created
+            else
+                render json: { status: 'ERROR', message: 'Category creation failed', data: category.errors }, status: :unprocessable_entity
+            end
         end
     end
 

@@ -86,6 +86,14 @@ RSpec.describe 'Sensors management' do
             post '/sensors', :params => { sensorName: 'Test sensor', sensorUnit: 'Test unit'}
             expect(response.status).to eql(401)
         end
+
+        it 'returns a status message (ERROR) if the user is not admin' do
+            token =  Knock::AuthToken.new(payload: { sub: 2, admin: false }).token
+            post '/sensors', :headers => { Authorization: "Bearer #{token}" }, :params => { sensorName: 'Test sensor 2', sensorUnit: 'Test Unit' }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(401)
+        end
     end
 
     describe 'PATCH /sensors/:id' do
