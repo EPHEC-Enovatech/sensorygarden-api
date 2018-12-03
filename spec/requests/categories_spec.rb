@@ -67,11 +67,19 @@ RSpec.describe 'Categories management' do
             expect(response.status).to eql(422)
         end
 
-        it 'returns a status messqge (ERROR) if category already exists' do
+        it 'returns a status message (ERROR) if category already exists' do
             post '/categories', :headers => { Authorization: "Bearer #{@token}" }, :params => { categoryName: "Category 1" }
             json = JSON.parse response.body
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(422)
+        end
+
+        it 'returns a status message (ERROR) if the user is not admin' do
+            token =  Knock::AuthToken.new(payload: { sub: 2, admin: false }).token
+            post '/categories', :headers => { Authorization: "Bearer #{token}" }, :params => { categoryName: "Test Category 2" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql("ERROR")
+            expect(response.status).to eql(401)
         end
     end
 

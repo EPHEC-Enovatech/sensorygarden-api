@@ -13,11 +13,13 @@ class SensorsController < ApplicationController
   end
 
   def create 
-    sensor = Sensor.new(sensor_params)
-    if sensor.save
-      render json: { status: 'SUCCESS', message: 'Saved new Sensor', data: sensor }, status: :ok
-    else 
-      render json: { status: 'ERROR', message: 'Sensor not saved', data: sensor.errors }, status: :unprocessable_entity
+    if check_current_isAdmin?
+      sensor = Sensor.new(sensor_params)
+      if sensor.save
+        render json: { status: 'SUCCESS', message: 'Saved new Sensor', data: sensor }, status: :ok
+      else 
+        render json: { status: 'ERROR', message: 'Sensor not saved', data: sensor.errors }, status: :unprocessable_entity
+      end
     end
   end
 
