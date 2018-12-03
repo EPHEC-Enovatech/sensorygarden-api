@@ -16,9 +16,9 @@ class SensorsController < ApplicationController
     if check_current_isAdmin?
       sensor = Sensor.new(sensor_params)
       if sensor.save
-        render json: { status: 'SUCCESS', message: 'Saved new Sensor', data: sensor }, status: :ok
+        render json: { status: 'SUCCESS', message: 'Le capteur a été ajouté', data: sensor }, status: :ok
       else 
-        render json: { status: 'ERROR', message: 'Sensor not saved', data: sensor.errors }, status: :unprocessable_entity
+        render json: { status: 'ERROR', message: "Impossible d'ajouter ce capteur", data: sensor.errors }, status: :unprocessable_entity
       end
     end
   end

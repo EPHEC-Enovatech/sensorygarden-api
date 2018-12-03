@@ -49,10 +49,10 @@ class DevicesController < ApplicationController
         if device
             if check_current_user(device.user_id)
                 device.update_attributes(device_params)
-                render json: { status: "SUCCESS", message: "Device updated", data: device }, status: :ok
+                render json: { status: "SUCCESS", message: "Votre Sensory Captor a bien été mis à jour", data: device }, status: :ok
             end
         else
-            render json: { status: "ERROR", message: "No device found for requested user" }, status: :not_found
+            render json: { status: "ERROR", message: "Impossible de modifier votre Sensory Captor" }, status: :not_found
         end
     end
 
@@ -61,10 +61,10 @@ class DevicesController < ApplicationController
         if device
             if check_current_user(device.user_id)
                 device.destroy
-                render json: { status: "SUCCESS", message: "Device deleted", data: device }, status: :ok
+                render json: { status: "SUCCESS", message: "Sensory Captor supprimé", data: device }, status: :ok
             end
         else 
-            render json: { status: "ERROR", message: "No device found for requested user" }, status: :not_found
+            render json: { status: "ERROR", message: "Impossible de supprimer ce Sensory Captor" }, status: :not_found
         end
     end
 
