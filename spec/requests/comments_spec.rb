@@ -26,21 +26,21 @@ end
 RSpec.describe 'Comments management' do
     describe "GET /comments" do
         it 'returns a status message' do
-            get '/comments', :headers => { Authorization: "Bearer #{@token}" }
+            get '/comments'
             json = JSON.parse response.body
             expect(json['status']).to eql("SUCCESS")
             expect(response.status).to eql(200)
         end
 
         it 'supports getting an :id' do
-            get '/comments/1', :headers => { Authorization: "Bearer #{@token}" }
+            get '/comments/1'
             json = JSON.parse response.body
             expect(json['status']).to eql("SUCCESS")
             expect(response.status).to eql(200)
         end
 
         it 'returns a status message (ERROR) if the id does not exist' do
-            get '/comments/42', :headers => { Authorization: "Bearer #{@token}" }
+            get '/comments/42'
             json = JSON.parse response.body
             expect(json['status']).to eql("ERROR")
             expect(response.status).to eql(404)
