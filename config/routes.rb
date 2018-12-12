@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  # Monitoring
+  get '/ping' => 'monitor#ping'
   
   # JWT token generation
   post 'user_token' => 'user_token#create'
