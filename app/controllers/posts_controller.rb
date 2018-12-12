@@ -2,7 +2,7 @@ include ERB::Util
 
 class PostsController < ApplicationController
 
-    before_action :authenticate_user
+    before_action :authenticate_user, except: [:index, :show]
 
     def index
         posts = Post.order('postDate desc').all.to_json(:include => { :user => { :only => [:nom, :prenom, :email] }, :categories => {}, :comments => {} })
