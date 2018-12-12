@@ -85,8 +85,12 @@ class UsersController < ApplicationController
     def destroy
         if check_current_user(params[:id])
             user = User.find(params[:id])
-            user.destroy
-            render json: {status: "SUCCESS", message: "User deleted", data: user}, status: :ok
+            if user.authenticate(params[:password])
+                user.destroy
+                render json: {status: "SUCCESS", message: "Votre compte a bien été supprimé", data: user}, status: :ok
+            else
+                render json: { status: 'ERROR', message: 'Le mot de passe est incorrect' }, status: :unauthorized
+            end
         end
     end
 

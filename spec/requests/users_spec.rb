@@ -232,14 +232,22 @@ RSpec.describe 'Users management' do
             json = JSON.parse(response.body)
             expect(json['status']).to eql('ERROR')
             expect(response.status).to eql(404)
-
         end
 
         it 'returns a status message' do
-            delete '/users/1', :headers => { Authorization: "Bearer #{@token}"}
+            token =  Knock::AuthToken.new(payload: { sub: 6, admin: false }).token
+            delete '/users/6', :headers => { Authorization: "Bearer #{token}"}, :params => { password: "1234" }
             json = JSON.parse(response.body)
             expect(json['status']).to eql('SUCCESS')
             expect(response.status).to eql(200)
+        end
+
+        it 'returns a status message (ERROR) if the password is incorrect' do
+            token =  Knock::AuthToken.new(payload: { sub: 5, admin: false }).token
+            delete '/users/5', :headers => { Authorization: "Bearer #{token}" }, :params => { password: "Bad" }
+            json = JSON.parse response.body
+            expect(json['status']).to eql('ERROR')
+            expect(response.status).to eql(401)
         end
     end
 end
