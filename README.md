@@ -26,6 +26,7 @@ Here's a non-exhaustive list of the technologies and dependencies used
 - Nginx (Reverse Proxy)
 - Capistrano (Deployment)
 - Travis-CI (Continuous deployment)
+- RSpec (Unit & integration tests)
 
 ## Prerequirements
 
@@ -72,4 +73,35 @@ $ rails s
 
 The API is now accessible at `localhost:3000`
 
+## Usage
 
+Once you have the developement server running you can test the API by openning an HTTP client (eg. Postman). 
+You can now perform a GET request on `localhost:3000/ping`, you should get a response looking like this :
+```json
+{
+  "status": "SUCCESS",
+  "message": "Pong !"
+}
+```
+
+If you want to try out other endpoints you have a complete API documentation [here](https://documenter.getpostman.com/view/4801562/RzZ3LhFG)
+
+## Testing
+
+You can run the tests on the API yourself.
+
+First you may want to change the database user and password in the `/config/database.yaml` file first :
+```yaml
+test:
+  <<: *default
+  database: sensorygarden_api_test
+  username: {{YOUR USERNAME}}
+  password: {{YOUR PASSWORD}}
+```
+
+Then run the following command :
+```
+$ bundle exec rake spec
+```
+
+You can find the code for the tests in `/spec/requests`
