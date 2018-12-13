@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
 
-    before_action :authenticate_user
+    before_action :authenticate_user, except: [:index, :show]
 
     def index
         render json: { status: 'SUCCESS', message: "All current catogries in database", data: Category.all }, status: :ok
